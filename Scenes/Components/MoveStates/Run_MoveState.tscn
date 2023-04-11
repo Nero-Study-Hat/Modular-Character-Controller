@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfhwbxif4omos"]
+
+[ext_resource type="Script" path="res://Scenes/Components/MoveStates/Run_MoveState.cs" id="1_0itk2"]
+
+[node name="Run_MoveState" type="Node"]
+script = ExtResource("1_0itk2")

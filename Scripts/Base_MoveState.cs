@@ -4,8 +4,8 @@ using Godot;
 
 public abstract partial class Base_MoveState : Node
 {
-    [Export]
-    protected PhysicsBody2D entity;
+    // [Export]
+    // protected PhysicsBody2D entity;
 
     public abstract void Enter(CharacterBody2D entity);
 
