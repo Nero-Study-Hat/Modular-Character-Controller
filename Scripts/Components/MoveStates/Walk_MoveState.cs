@@ -10,7 +10,7 @@ public partial class Walk_MoveState : Base_MoveState
 // only a select function. This would mean I'd need to get
 // the name component node a bunch of times for different times.
     [Node]
-    private ISetDirection setDirectionComponent;
+    private IGetDirection getDirectionComponent;
     [Node]
     private IMoveVelocity moveVelocityComponent;
 
@@ -28,7 +28,7 @@ public partial class Walk_MoveState : Base_MoveState
 
     public override void PhysicsProcess(CharacterBody2D entity)
     {
-        var direction = setDirectionComponent.SetDirection();
+        var direction = getDirectionComponent.GetDirection();
         moveVelocityComponent.SetDirection(direction.X, direction.Y);
         moveVelocityComponent.SetVelocity(entity.Velocity.X, entity.Velocity.Y);
 
