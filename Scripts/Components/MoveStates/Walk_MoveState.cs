@@ -3,21 +3,28 @@ using GodotUtilities;
 
 public partial class Walk_MoveState : Base_MoveState
 {
-    // [Node]
-    // private KeyboardInput_Component keyboardInput_Component;
+    // [Node()] // never assigned to and left as null, problem
+    // private PlayerMove_KeysComponent? getDirectionComponent;
 
-// Problem is having a big component file that implements
-// only a select function. This would mean I'd need to get
-// the name component node a bunch of times for different times.
-    [Node]
-    private IGetDirection getDirectionComponent;
-    [Node]
-    private IMoveVelocity moveVelocityComponent;
+    // [Node] // assigned to just fine
+    // private IMoveVelocity? moveVelocityComponent;
 
-    public override void _EnterTree()
+    Vector2 direction = new Vector2();
+
+    public override void _Notification(int what)
     {
-        this.WireNodes();
+        base._Notification(what); // needed for IMoveVelocity node assignment
+        
+        if (what == NotificationSceneInstantiated)
+        {
+            this.WireNodes();
+        }
     }
+
+    // [Export]
+    // private IGetDirection getDirectionComponent;
+    // [Export]
+    // private IMoveVelocity moveVelocityComponent;
 
     public override void Enter(CharacterBody2D entity) {}
 
@@ -28,7 +35,7 @@ public partial class Walk_MoveState : Base_MoveState
 
     public override void PhysicsProcess(CharacterBody2D entity)
     {
-        var direction = getDirectionComponent.GetDirection();
+        direction = getDirectionComponent.GetDirection();
         moveVelocityComponent.SetDirection(direction.X, direction.Y);
         moveVelocityComponent.SetVelocity(entity.Velocity.X, entity.Velocity.Y);
 

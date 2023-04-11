@@ -11,8 +11,8 @@ public partial class VelocityComponent : Node, IMoveVelocity
     [Export]
     private float friction = 10;
 
-    private Vector2 velocity = new Vector2();
-    private Vector2 direction = new Vector2();
+    private Vector2 velocity;
+    private Vector2 direction;
     // private Vector2 direction;
 
     // public Vector2 SetDirection(Vector2 Direction)
@@ -23,14 +23,12 @@ public partial class VelocityComponent : Node, IMoveVelocity
 
     public void SetDirection(float position_x, float position_y)
     {
-        direction.X = position_x;
-        direction.Y = position_y;
+        direction = new Vector2(position_x, position_y);
     }
 
     public void SetVelocity(float position_x, float position_y)
     {
-        velocity.X = position_x;
-        velocity.Y = position_y;
+        velocity = new Vector2(position_x, position_y);
     }
 
     public Vector2 GetVelocity()
