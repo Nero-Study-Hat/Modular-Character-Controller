@@ -10,8 +10,8 @@ public partial class Movement_StateMachine : Node
     [Export]
     Base_MoveState startState;
 
-    [Export]
-    Base_MoveState state0;
+    // [Export]
+    // Base_MoveState state0;
     [Export]
     Base_MoveState state1;
     [Export]
@@ -46,10 +46,11 @@ public partial class Movement_StateMachine : Node
 
 
     // Signal recievers to change move state.
-    private void _on_player_move_state_change_0() // idle state
-    {
-        Change(state0);
-    }
+
+    // private void _on_player_move_state_change_0() // idle state
+    // {
+    //     Change(state0);
+    // }
 
     private void _on_player_move_state_change_1()
     {

@@ -29,8 +29,8 @@ public partial class Player : CharacterBody2D
 
 
 	// Send signal when a state change condition is met.
-	[Signal]
-	public delegate void MoveState_Change0EventHandler();
+	// [Signal]
+	// public delegate void MoveState_Change0EventHandler();
 	[Signal]
 	public delegate void MoveState_Change1EventHandler();
 	[Signal]
@@ -40,11 +40,11 @@ public partial class Player : CharacterBody2D
 
 	private void moveState_ChangeCondition()
 	{
-		if (Velocity == Vector2.Zero && currentState != 0)
-		{
-			EmitSignal(SignalName.MoveState_Change0);
-			currentState = 0;
-		}
+		// if (Velocity == Vector2.Zero && currentState != 0)
+		// {
+		// 	EmitSignal(SignalName.MoveState_Change0);
+		// 	currentState = 0;
+		// }
 		if (Input.IsActionJustPressed("moveState_walk") && currentState != 1)
 		{
 			EmitSignal(SignalName.MoveState_Change1);
