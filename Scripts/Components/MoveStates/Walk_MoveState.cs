@@ -4,27 +4,37 @@ using GodotUtilities;
 public partial class Walk_MoveState : Base_MoveState
 {
     // [Node()] // never assigned to and left as null, problem
-    // private PlayerMove_KeysComponent? getDirectionComponent;
+    // private PlayerMove_KeysComponent? getDirection;
 
     // [Node] // assigned to just fine
-    // private IMoveVelocity? moveVelocityComponent;
+    // private IMoveVelocity? moveVelocity;
+
+    IMoveVelocity moveVelocity;
+    IGetDirection getDirection;
 
     Vector2 direction = new Vector2();
 
-    public override void _Notification(int what)
+    // [Export]
+    // private IGetDirection getDirection;
+    // [Export]
+    // private IMoveVelocity moveVelocity;
+
+
+    public override void _Ready()
     {
-        base._Notification(what); // needed for IMoveVelocity node assignment
-        
-        if (what == NotificationSceneInstantiated)
+        for (int index = 0; index < this.GetChildCount(); index++)
         {
-            this.WireNodes();
+            if (this.GetChild(index) is IMoveVelocity)
+            {
+                moveVelocity = this.GetChild<IMoveVelocity>(index);
+            }
+            if (this.GetChild(index) is IGetDirection)
+            {
+                getDirection = this.GetChild<IGetDirection>(index);
+            }
         }
     }
 
-    // [Export]
-    // private IGetDirection getDirectionComponent;
-    // [Export]
-    // private IMoveVelocity moveVelocityComponent;
 
     public override void Enter(CharacterBody2D entity) {}
 
@@ -35,14 +45,14 @@ public partial class Walk_MoveState : Base_MoveState
 
     public override void PhysicsProcess(CharacterBody2D entity)
     {
-        direction = getDirectionComponent.GetDirection();
-        moveVelocityComponent.SetDirection(direction.X, direction.Y);
-        moveVelocityComponent.SetVelocity(entity.Velocity.X, entity.Velocity.Y);
+        direction = getDirection.GetDirection();
+        moveVelocity.SetDirection(direction.X, direction.Y);
+        moveVelocity.SetVelocity(entity.Velocity.X, entity.Velocity.Y);
 
-        moveVelocityComponent.AccelerateTo();
-        moveVelocityComponent.Friction();
+        moveVelocity.AccelerateTo();
+        moveVelocity.Friction();
 
-        entity.Velocity = moveVelocityComponent.GetVelocity();
+        entity.Velocity = moveVelocity.GetVelocity();
         entity.MoveAndSlide();
     }
 }

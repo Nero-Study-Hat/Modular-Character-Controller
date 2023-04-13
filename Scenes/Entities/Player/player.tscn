@@ -21,10 +21,8 @@ offset_bottom = 40.0
 position = Vector2(20, 20)
 shape = SubResource("RectangleShape2D_oysjy")
 
-[node name="Movement_StateMachine" parent="." node_paths=PackedStringArray("startState", "state1", "state2") instance=ExtResource("2_xmewg")]
+[node name="Movement_StateMachine" parent="." node_paths=PackedStringArray("startState") instance=ExtResource("2_xmewg")]
 startState = NodePath("Walk_MoveState")
-state1 = NodePath("Walk_MoveState")
-state2 = NodePath("Run_MoveState")
 
 [node name="Walk_MoveState" parent="Movement_StateMachine" instance=ExtResource("4_a600j")]
 

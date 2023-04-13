@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://bwl5a2ndhny5a"]
 
 [ext_resource type="Script" path="res://Scripts/Components/PlayerMove_KeysComponent.cs" id="1_m6m75"]
 
-[node name="PlayerMove_KeysComponent" type="Node"]
+[node name="PlayerMove_KeysComponent" type="Node" groups=["BaseComponents"]]
 script = ExtResource("1_m6m75")
