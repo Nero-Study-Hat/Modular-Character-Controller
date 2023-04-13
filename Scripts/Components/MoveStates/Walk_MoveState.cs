@@ -41,7 +41,10 @@ public partial class Walk_MoveState : Base_MoveState
     public override void Exit(CharacterBody2D entity) {}
 
 
-    public override void Process(CharacterBody2D entity) {}
+    public override void Process(CharacterBody2D entity)
+    {
+        moveState_Logging(entity);
+    }
 
     public override void PhysicsProcess(CharacterBody2D entity)
     {
@@ -54,5 +57,15 @@ public partial class Walk_MoveState : Base_MoveState
 
         entity.Velocity = moveVelocity.GetVelocity();
         entity.MoveAndSlide();
+    }
+
+
+    private void moveState_Logging(CharacterBody2D entity)
+    {
+        string entity_velocity = GD.VarToStr(entity.Velocity);
+        string entity_direction = GD.VarToStr(direction);
+
+        using var moveState_LogFile = FileAccess.Open("user://custom_logs/velocityComponent_log.txt", FileAccess.ModeFlags.Write);
+        moveState_LogFile.StoreLine("Velocity: " + entity_direction + " Direction: " + entity_direction);
     }
 }

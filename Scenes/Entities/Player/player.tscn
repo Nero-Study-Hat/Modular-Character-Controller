@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://wst6ggh7rll8"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/Player/Player.cs" id="1_uhu85"]
-[ext_resource type="PackedScene" path="res://Scenes/Components/Movement_StateMachine.tscn" id="2_xmewg"]
+[ext_resource type="PackedScene" uid="uid://db751d3jvmb8k" path="res://Scenes/Components/Movement_StateMachine.tscn" id="2_xmewg"]
 [ext_resource type="PackedScene" uid="uid://dsw42bvuw5brg" path="res://Scenes/Components/MoveStates/Walk_MoveState.tscn" id="4_a600j"]
 [ext_resource type="PackedScene" uid="uid://cfhwbxif4omos" path="res://Scenes/Components/MoveStates/Run_MoveState.tscn" id="4_e0iv0"]
 
