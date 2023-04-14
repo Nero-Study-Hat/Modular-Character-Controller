@@ -1,5 +1,5 @@
 using Godot;
-using GodotUtilities;
+using System;
 
 public partial class Walk_MoveState : Base_MoveState
 {
@@ -14,6 +14,9 @@ public partial class Walk_MoveState : Base_MoveState
 
     Vector2 direction = new Vector2();
 
+    string logFileDir;
+    string logFileName;
+
     // [Export]
     // private IGetDirection getDirection;
     // [Export]
@@ -22,7 +25,6 @@ public partial class Walk_MoveState : Base_MoveState
 
     public override void _Ready()
     {
-        // newLogFile();
         new_LogFile();
 
         for (int index = 0; index < this.GetChildCount(); index++)
@@ -46,7 +48,6 @@ public partial class Walk_MoveState : Base_MoveState
 
     public override void Process(CharacterBody2D entity)
     {
-        // moveState_Logging(entity);
         update_LogFile(entity);
     }
 
@@ -66,36 +67,25 @@ public partial class Walk_MoveState : Base_MoveState
     }
 
 
-// These two functions are currently useless as I am unable to append a new line at the end of the log file.
-    // private void newLogFile()
-    // {
-    //     using var moveState_LogFile = FileAccess.Open("user://custom_logs/walkState_log.txt", FileAccess.ModeFlags.Write);
-    // }
-
-    // private void moveState_Logging(CharacterBody2D entity)
-    // {
-    //     string entity_velocity = GD.VarToStr(entity.Velocity);
-    //     string entity_direction = GD.VarToStr(direction);
-
-    //     using var moveState_LogFile = FileAccess.Open("user://custom_logs/walkState_log.txt", FileAccess.ModeFlags.ReadWrite);
-    //     moveState_LogFile.StoreString("\n");
-    //     moveState_LogFile.StoreString("Velocity: " + entity_direction + " Direction: " + entity_direction);
-    // }
-
-// This works but I copying and rewriting the entire file every frame which is a horrible idea.
-    public void new_LogFile()
+    private void new_LogFile()
     {
-        using var file = FileAccess.Open("user://custom_logs/log_file.txt", FileAccess.ModeFlags.Write);
-        file.StoreString("Hello world.");
+        string currentTime = DateTime.Now.ToString("MMM_dd_HHmm");
+        string scriptName = this.GetScript().ToString();
+
+        string currentFile = this.GetScript().GetType().ToString();
+
+        logFileDir = "user://custom_logs/";
+        logFileName = currentFile + "_Log_" + currentTime + ".txt";
+        using var moveState_LogFile = FileAccess.Open(logFileDir + logFileName, FileAccess.ModeFlags.Write);
     }
 
-    public void update_LogFile(CharacterBody2D entity)
+    private void update_LogFile(CharacterBody2D entity)
     {
         string entity_velocity = GD.VarToStr(entity.Velocity);
         string entity_direction = GD.VarToStr(direction);
 
-        using var file = FileAccess.Open("user://custom_logs/log_file.txt", FileAccess.ModeFlags.ReadWrite);
-        string content = file.GetAsText() + "\n" + "Velocity: " + entity_velocity + " Direction: " + entity_direction;
-        file.StoreString(content);
+        using var moveState_LogFile = FileAccess.Open(logFileName, FileAccess.ModeFlags.ReadWrite);
+        moveState_LogFile.SeekEnd();
+        moveState_LogFile.StoreString("\n" + "Velocity: " + entity_velocity + " Direction: " + entity_direction);
     }
 }
