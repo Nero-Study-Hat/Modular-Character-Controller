@@ -14,9 +14,6 @@ public partial class Walk_MoveState : Base_MoveState
 
     Vector2 direction = new Vector2();
 
-    string logFileDir;
-    string logFileName;
-
     // [Export]
     // private IGetDirection getDirection;
     // [Export]
@@ -25,8 +22,6 @@ public partial class Walk_MoveState : Base_MoveState
 
     public override void _Ready()
     {
-        new_LogFile();
-
         for (int index = 0; index < this.GetChildCount(); index++)
         {
             if (this.GetChild(index) is IMoveVelocity)
@@ -46,10 +41,7 @@ public partial class Walk_MoveState : Base_MoveState
     public override void Exit(CharacterBody2D entity) {}
 
 
-    public override void Process(CharacterBody2D entity)
-    {
-        update_LogFile(entity);
-    }
+    public override void Process(CharacterBody2D entity) {}
 
     public override void PhysicsProcess(CharacterBody2D entity)
     {
@@ -59,34 +51,16 @@ public partial class Walk_MoveState : Base_MoveState
         moveVelocity.SetDirection(direction.X, direction.Y);
         moveVelocity.SetVelocity(entity.Velocity.X, entity.Velocity.Y);
 
-        moveVelocity.AccelerateTo();
-        moveVelocity.Friction();
+        if (direction != Vector2.Zero)
+        {
+            moveVelocity.AccelerateTo();
+        }
+        else
+        {
+            moveVelocity.Friction();
+        }
 
         entity.Velocity = moveVelocity.GetVelocity();
         entity.MoveAndSlide();
-    }
-
-
-     public void new_LogFile()
-    {
-        string currentTime = DateTime.Now.ToString("MMM_dd_HHmm");
-        string currentFile = this.GetType().ToString();
-
-        logFileDir = "user://custom_logs/";
-        logFileName = currentFile + "_Log_" + currentTime + ".txt";
-        // logFileName = currentFile + "_Log_" + currentTime + ".txt"; // the null exception comes from this line
-
-        using var file = FileAccess.Open(logFileDir + logFileName, FileAccess.ModeFlags.Write);
-        file.StoreString("Hello world.");
-    }
-
-    private void update_LogFile(CharacterBody2D entity)
-    {
-        string entity_velocity = GD.VarToStr(entity.Velocity);
-        string entity_direction = GD.VarToStr(direction);
-
-        using var moveState_LogFile = FileAccess.Open(logFileDir + logFileName, FileAccess.ModeFlags.ReadWrite);
-        moveState_LogFile.SeekEnd();
-        moveState_LogFile.StoreString("\n" + "Velocity: " + entity_velocity + " Direction: " + entity_direction);
     }
 }
