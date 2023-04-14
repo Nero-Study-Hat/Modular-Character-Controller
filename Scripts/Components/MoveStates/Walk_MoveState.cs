@@ -67,16 +67,17 @@ public partial class Walk_MoveState : Base_MoveState
     }
 
 
-    private void new_LogFile()
+     public void new_LogFile()
     {
         string currentTime = DateTime.Now.ToString("MMM_dd_HHmm");
-        string scriptName = this.GetScript().ToString();
-
-        string currentFile = this.GetScript().GetType().ToString();
+        string currentFile = this.GetType().ToString();
 
         logFileDir = "user://custom_logs/";
         logFileName = currentFile + "_Log_" + currentTime + ".txt";
-        using var moveState_LogFile = FileAccess.Open(logFileDir + logFileName, FileAccess.ModeFlags.Write);
+        // logFileName = currentFile + "_Log_" + currentTime + ".txt"; // the null exception comes from this line
+
+        using var file = FileAccess.Open(logFileDir + logFileName, FileAccess.ModeFlags.Write);
+        file.StoreString("Hello world.");
     }
 
     private void update_LogFile(CharacterBody2D entity)
@@ -84,7 +85,7 @@ public partial class Walk_MoveState : Base_MoveState
         string entity_velocity = GD.VarToStr(entity.Velocity);
         string entity_direction = GD.VarToStr(direction);
 
-        using var moveState_LogFile = FileAccess.Open(logFileName, FileAccess.ModeFlags.ReadWrite);
+        using var moveState_LogFile = FileAccess.Open(logFileDir + logFileName, FileAccess.ModeFlags.ReadWrite);
         moveState_LogFile.SeekEnd();
         moveState_LogFile.StoreString("\n" + "Velocity: " + entity_velocity + " Direction: " + entity_direction);
     }

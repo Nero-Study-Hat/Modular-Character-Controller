@@ -42,7 +42,7 @@ public partial class VelocityComponent : Node, IMoveVelocity
         velocity = velocity.MoveToward(direction * move_speed, acc_speed);
     }
 
-    public void Friction()
+    public void Friction() // this is giving me my movement bug
     {
         velocity = velocity.MoveToward(Vector2.Zero, friction);
     }
