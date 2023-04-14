@@ -1,15 +1,16 @@
 [gd_scene load_steps=6 format=3 uid="uid://wst6ggh7rll8"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/Player/Player.cs" id="1_uhu85"]
-[ext_resource type="PackedScene" path="res://Scenes/Components/Movement_StateMachine.tscn" id="2_xmewg"]
-[ext_resource type="PackedScene" path="res://Scenes/Components/MoveStates/Idle_MoveState.tscn" id="3_c36wq"]
+[ext_resource type="PackedScene" uid="uid://db751d3jvmb8k" path="res://Scenes/Components/Movement_StateMachine.tscn" id="2_xmewg"]
 [ext_resource type="PackedScene" uid="uid://dsw42bvuw5brg" path="res://Scenes/Components/MoveStates/Walk_MoveState.tscn" id="4_a600j"]
+[ext_resource type="PackedScene" uid="uid://cfhwbxif4omos" path="res://Scenes/Components/MoveStates/Run_MoveState.tscn" id="4_e0iv0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oysjy"]
 size = Vector2(40, 40)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("moveStates")]
 script = ExtResource("1_uhu85")
+moveStates = NodePath("Movement_StateMachine")
 metadata/_edit_group_ = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -20,8 +21,9 @@ offset_bottom = 40.0
 position = Vector2(20, 20)
 shape = SubResource("RectangleShape2D_oysjy")
 
-[node name="Movement_StateMachine" parent="." instance=ExtResource("2_xmewg")]
-
-[node name="Idle_MoveState" parent="Movement_StateMachine" instance=ExtResource("3_c36wq")]
+[node name="Movement_StateMachine" parent="." node_paths=PackedStringArray("startState") instance=ExtResource("2_xmewg")]
+startState = NodePath("Walk_MoveState")
 
 [node name="Walk_MoveState" parent="Movement_StateMachine" instance=ExtResource("4_a600j")]
+
+[node name="Run_MoveState" parent="Movement_StateMachine" instance=ExtResource("4_e0iv0")]

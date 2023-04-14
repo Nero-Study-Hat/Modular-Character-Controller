@@ -3,7 +3,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>ModularCharacterController</RootNamespace>
-    <!-- <Nullable>enable</Nullable> -->
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Firebelley.GodotUtilities" Version="3.3.0" />

@@ -12,12 +12,14 @@ public partial class Movement_StateMachine : Node
 
     // [Export]
     // Base_MoveState state0;
-    [Export]
-    Base_MoveState state1;
-    [Export]
-    Base_MoveState state2;
+    // [Export]
+    // Base_MoveState state1;
+    // [Export]
+    // Base_MoveState state2;
 
     Base_MoveState currentState;
+    Base_MoveState[] moveStates;
+
 
     public void Change(Base_MoveState newState)
     {
@@ -27,8 +29,20 @@ public partial class Movement_StateMachine : Node
         currentState = newState;
     }
 
+
     public void Init()
     {
+        var numStates = this.GetChildCount();
+        moveStates = new Base_MoveState[numStates];
+
+        for (int index = 0; index < numStates; index++)
+        {
+            if (this.GetChild(index) is Base_MoveState)
+            {
+                moveStates[index] = this.GetChild<Base_MoveState>(index);
+            }
+        }
+
         currentState = startState;
         startState.Enter(Entity);
     }
@@ -54,11 +68,11 @@ public partial class Movement_StateMachine : Node
 
     private void _on_player_move_state_change_1()
     {
-        Change(state1);
+        Change(moveStates[0]);
     }
 
     private void _on_player_move_state_change_2()
     {
-        Change(state2);
+        Change(moveStates[1]);
     }
 }

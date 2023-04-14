@@ -19,6 +19,7 @@ public partial class Player : CharacterBody2D
 
 	public override void _Process(double delta)
     {
+		moveState_ChangeCondition();
         moveStates.Process();
     }
 	
@@ -36,7 +37,7 @@ public partial class Player : CharacterBody2D
 	[Signal]
 	public delegate void MoveState_Change2EventHandler();
 
-	private int currentState = 0;
+	private int currentState = 1;
 
 	private void moveState_ChangeCondition()
 	{
