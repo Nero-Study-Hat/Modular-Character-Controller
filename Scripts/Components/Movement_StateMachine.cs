@@ -54,7 +54,7 @@ public partial class Movement_StateMachine : Node
         }
 
         CurrentState = startState;
-        startState.Enter(Entity);
+        CurrentState.Enter(Entity);
     }
 
 

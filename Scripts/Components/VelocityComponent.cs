@@ -4,22 +4,20 @@ using Godot;
 
 public partial class VelocityComponent : Node, IMoveVelocity
 {
-    [Export]
-    private float move_speed = 300;
-    [Export]
-    private float acc_speed = 6;
-    [Export]
-    private float friction = 10;
+    private float moveSpeedBase = 1f;
+    private float moveSpeedAcc = 1f;
+    private float MoveSpeedFric = 1f;
 
     private Vector2 velocity;
     private Vector2 direction;
-    // private Vector2 direction;
 
-    // public Vector2 SetDirection(Vector2 Direction)
-    // {
-    //     direction = Direction;
-    //     return direction;
-    // }
+
+    public void Initialize_MoveSpeedData(float MoveSpeedBase, float MoveSpeedAcceleration, float MoveSpeedFriction)
+    {
+        moveSpeedBase = MoveSpeedBase;
+        moveSpeedAcc = MoveSpeedAcceleration;
+        MoveSpeedFric = MoveSpeedFriction;
+    }
 
     public void SetDirection(float position_x, float position_y)
     {
@@ -39,24 +37,14 @@ public partial class VelocityComponent : Node, IMoveVelocity
 
     public void AccelerateTo()
     {
-        velocity = velocity.MoveToward(direction * move_speed, acc_speed);
+        velocity = velocity.MoveToward(direction * moveSpeedBase, moveSpeedAcc);
     }
 
     public void Friction() // this is giving me my movement bug
     {
-        velocity = velocity.MoveToward(Vector2.Zero, friction);
+        velocity = velocity.MoveToward(Vector2.Zero, MoveSpeedFric);
     }
 
-    // public void AccelerateTo(float direction_x, float direction_y)
-    // {
-    //     velocity.X = Mathf.MoveToward(velocity.X, direction_x * move_speed, acc_speed);
-    //     velocity.Y = Mathf.MoveToward(velocity.Y, direction_y * move_speed, acc_speed);
-    // }
-    // public void Friction()
-    // {
-    //     velocity.X = Mathf.MoveToward(velocity.X, 0, friction);
-    //     velocity.Y = Mathf.MoveToward(velocity.Y, 0, friction);
-    // }
 
     public void Move(CharacterBody2D entity)
     {
