@@ -6,10 +6,16 @@ public partial class Player : CharacterBody2D
 	[Export]
 	private Movement_StateMachine moveStates;
 
+// in the future maybe setup a log for who is accessing this if needed
+	public Player GetPlayerRef()
+	{
+		return this;
+	}
+
     public override void _Ready()
     {
 		moveStates.Entity = this;
-        moveStates.Init();
+        moveStates.Init(this);
     }
 
 	public override void _UnhandledInput(InputEvent @event)

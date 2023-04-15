@@ -10,6 +10,8 @@ public partial class Movement_StateMachine : Node
     [Export]
     Base_MoveState startState;
 
+    PlayerMoveStates_Conditions moveStates_Conditions;
+
     // [Export]
     // Base_MoveState state0;
     // [Export]
@@ -17,45 +19,55 @@ public partial class Movement_StateMachine : Node
     // [Export]
     // Base_MoveState state2;
 
-    Base_MoveState currentState;
-    Base_MoveState[] moveStates;
+    public Base_MoveState CurrentState {get; private set;}
+    public Base_MoveState[] MoveStates {get; private set;}
 
+    public Movement_StateMachine GetMovement_StateMachine()
+    {
+        return this;
+    }
+
+    [Signal]
+    public delegate void MoveState_ChangedEventHandler(Base_MoveState MoveState);
 
     public void Change(Base_MoveState newState)
     {
-        currentState.Exit(Entity);
+        CurrentState.Exit(Entity);
         newState.Enter(Entity);
 
-        currentState = newState;
+        CurrentState = newState;
+        EmitSignal(SignalName.MoveState_Changed, newState);
     }
 
 
-    public void Init()
+    public void Init(Player player)
     {
+        moveStates_Conditions = new PlayerMoveStates_Conditions(player, this, CurrentState);
+
         var numStates = this.GetChildCount();
-        moveStates = new Base_MoveState[numStates];
+        MoveStates = new Base_MoveState[numStates];
 
         for (int index = 0; index < numStates; index++)
         {
             if (this.GetChild(index) is Base_MoveState)
             {
-                moveStates[index] = this.GetChild<Base_MoveState>(index);
+                MoveStates[index] = this.GetChild<Base_MoveState>(index);
             }
         }
 
-        currentState = startState;
+        CurrentState = startState;
         startState.Enter(Entity);
     }
 
 
     public void Process()
     {
-        currentState.PhysicsProcess(Entity);
+        CurrentState.Process(Entity);
     }
 
     public void PhysicsProcess()
     {
-        currentState.Process(Entity);
+        CurrentState.PhysicsProcess(Entity);
     }
 
 
@@ -68,11 +80,11 @@ public partial class Movement_StateMachine : Node
 
     private void _on_player_move_state_change_1()
     {
-        Change(moveStates[0]);
+        Change(MoveStates[0]);
     }
 
     private void _on_player_move_state_change_2()
     {
-        Change(moveStates[1]);
+        Change(MoveStates[1]);
     }
 }
