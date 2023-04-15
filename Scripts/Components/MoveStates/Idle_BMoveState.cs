@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Idle_MoveState : Base_MoveState
+public partial class Idle_BMoveState : Base_MoveState
 {
     // [Node]
     // private VelocityComponent velocityComponent;

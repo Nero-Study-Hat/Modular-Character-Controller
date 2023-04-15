@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Walk_MoveState : Base_MoveState
+public partial class Normal_BMoveState : Base_MoveState
 {
     // [Node()] // never assigned to and left as null, problem
     // private PlayerMove_KeysComponent? getDirection;
