@@ -2,28 +2,33 @@ using Godot;
 
 public class PlayerMoveStates_Conditions
 {
-    Player player;
-    Movement_StateMachine moveStatesManager;
-    Base_MoveState currentState;
+    Player player = new Player();
+    Movement_StateMachine moveStatesManager = new Movement_StateMachine();
 
-    public PlayerMoveStates_Conditions (Player playerRef, Movement_StateMachine movement_StateMachine, Base_MoveState CurrentState)
+    public void SetClasses()
     {
-        player = playerRef;
-        moveStatesManager = movement_StateMachine;
-        currentState = CurrentState;
+        player = player.GetPlayerRef();
+        moveStatesManager = moveStatesManager.GetMovement_StateMachine();
     }
 
-
-    public void ConditionsChecker() // call in process
+    public void ConditionsChecker(Base_MoveState currentState, Base_MoveState[] moveStates) // call in process
     {
         if (currentState == moveStatesManager.MoveStates[1])
         {
-            CheckState2();
+            if (CheckState2() == true)
+            {
+                moveStatesManager.ChangeState(moveStates[2]);
+            }
+            return;
         }
 
         if (currentState == moveStatesManager.MoveStates[2])
         {
-            CheckState1();
+            if (CheckState1() == true)
+            {
+                moveStatesManager.ChangeState(moveStates[1]);
+            }
+            return;
         }
     }
 

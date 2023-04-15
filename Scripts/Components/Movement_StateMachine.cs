@@ -10,8 +10,6 @@ public partial class Movement_StateMachine : Node
     [Export]
     Base_MoveState startState;
 
-    PlayerMoveStates_Conditions moveStates_Conditions;
-
     // [Export]
     // Base_MoveState state0;
     // [Export]
@@ -22,6 +20,8 @@ public partial class Movement_StateMachine : Node
     public Base_MoveState CurrentState {get; private set;}
     public Base_MoveState[] MoveStates {get; private set;}
 
+    PlayerMoveStates_Conditions moveStates_Conditions = new PlayerMoveStates_Conditions();
+
     public Movement_StateMachine GetMovement_StateMachine()
     {
         return this;
@@ -30,7 +30,7 @@ public partial class Movement_StateMachine : Node
     [Signal]
     public delegate void MoveState_ChangedEventHandler(Base_MoveState MoveState);
 
-    public void Change(Base_MoveState newState)
+    public void ChangeState(Base_MoveState newState)
     {
         CurrentState.Exit(Entity);
         newState.Enter(Entity);
@@ -42,8 +42,6 @@ public partial class Movement_StateMachine : Node
 
     public void Init(Player player)
     {
-        moveStates_Conditions = new PlayerMoveStates_Conditions(player, this, CurrentState);
-
         var numStates = this.GetChildCount();
         MoveStates = new Base_MoveState[numStates];
 
@@ -62,6 +60,7 @@ public partial class Movement_StateMachine : Node
 
     public void Process()
     {
+        moveStates_Conditions.ConditionsChecker(CurrentState, MoveStates);
         CurrentState.Process(Entity);
     }
 
@@ -80,11 +79,11 @@ public partial class Movement_StateMachine : Node
 
     private void _on_player_move_state_change_1()
     {
-        Change(MoveStates[0]);
+        ChangeState(MoveStates[0]);
     }
 
     private void _on_player_move_state_change_2()
     {
-        Change(MoveStates[1]);
+        ChangeState(MoveStates[1]);
     }
 }
