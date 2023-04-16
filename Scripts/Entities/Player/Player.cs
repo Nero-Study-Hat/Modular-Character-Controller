@@ -6,10 +6,16 @@ public partial class Player : CharacterBody2D
 	[Export]
 	private Movement_StateMachine moveStates;
 
+// in the future maybe setup a log for who is accessing this if needed
+	public Player GetPlayerRef()
+	{
+		return this;
+	}
+
     public override void _Ready()
     {
 		moveStates.Entity = this;
-        moveStates.Init();
+        moveStates.Init(this);
     }
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -19,9 +25,16 @@ public partial class Player : CharacterBody2D
 
 	public override void _Process(double delta)
     {
+		// this.Connect(Movement_StateMachine.SignalName.MoveState_Changed, new Callable(this, nameof(TestSignal))); // currently broken somehow ?
+
 		moveState_ChangeCondition();
         moveStates.Process();
     }
+
+	// public void TestSignal() // currently breaking somehow ?
+	// {
+	// 	GD.Print("Hello world.");
+	// }
 	
     public override void _PhysicsProcess(double delta)
     {

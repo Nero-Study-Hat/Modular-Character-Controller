@@ -8,6 +8,12 @@
 
 config_version=5
 
+[MonoCustomResourceRegistry]
+
+ClassPrefix=""
+SearchType=0
+ResourceScriptDirectories=[&"res://Scripts/Resources/"]
+
 [application]
 
 config/name="Modular Character Controller"
@@ -22,6 +28,10 @@ file_logging/max_log_files=10
 [dotnet]
 
 project/assembly_name="Modular Character Controller"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/MonoCustomResourceRegistry/plugin.cfg")
 
 [input]
 

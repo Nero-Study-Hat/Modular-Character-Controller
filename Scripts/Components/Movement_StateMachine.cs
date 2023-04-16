@@ -17,45 +17,56 @@ public partial class Movement_StateMachine : Node
     // [Export]
     // Base_MoveState state2;
 
-    Base_MoveState currentState;
-    Base_MoveState[] moveStates;
+    public Base_MoveState CurrentState {get; private set;}
+    public Base_MoveState[] MoveStates {get; private set;}
 
+    // PlayerMoveStates_Conditions moveStates_Conditions = new PlayerMoveStates_Conditions();
 
-    public void Change(Base_MoveState newState)
+    public Movement_StateMachine GetMovement_StateMachine()
     {
-        currentState.Exit(Entity);
+        return this;
+    }
+
+    [Signal]
+    public delegate void MoveState_ChangedEventHandler(Base_MoveState MoveState);
+
+    public void ChangeState(Base_MoveState newState)
+    {
+        CurrentState.Exit(Entity);
         newState.Enter(Entity);
 
-        currentState = newState;
+        CurrentState = newState;
+        EmitSignal(SignalName.MoveState_Changed, newState);
     }
 
 
-    public void Init()
+    public void Init(Player player)
     {
         var numStates = this.GetChildCount();
-        moveStates = new Base_MoveState[numStates];
+        MoveStates = new Base_MoveState[numStates];
 
         for (int index = 0; index < numStates; index++)
         {
             if (this.GetChild(index) is Base_MoveState)
             {
-                moveStates[index] = this.GetChild<Base_MoveState>(index);
+                MoveStates[index] = this.GetChild<Base_MoveState>(index);
             }
         }
 
-        currentState = startState;
         startState.Enter(Entity);
+        CurrentState = startState;
     }
 
 
     public void Process()
     {
-        currentState.PhysicsProcess(Entity);
+        // moveStates_Conditions.ConditionsChecker(CurrentState, MoveStates);
+        CurrentState.Process(Entity);
     }
 
     public void PhysicsProcess()
     {
-        currentState.Process(Entity);
+        CurrentState.PhysicsProcess(Entity);
     }
 
 
@@ -68,11 +79,11 @@ public partial class Movement_StateMachine : Node
 
     private void _on_player_move_state_change_1()
     {
-        Change(moveStates[0]);
+        ChangeState(MoveStates[0]);
     }
 
     private void _on_player_move_state_change_2()
     {
-        Change(moveStates[1]);
+        ChangeState(MoveStates[1]);
     }
 }

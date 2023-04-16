@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://Scripts/Entities/Player/Player.cs" id="1_uhu85"]
 [ext_resource type="PackedScene" uid="uid://db751d3jvmb8k" path="res://Scenes/Components/Movement_StateMachine.tscn" id="2_xmewg"]
-[ext_resource type="PackedScene" uid="uid://dsw42bvuw5brg" path="res://Scenes/Components/MoveStates/Walk_MoveState.tscn" id="4_a600j"]
-[ext_resource type="PackedScene" uid="uid://cfhwbxif4omos" path="res://Scenes/Components/MoveStates/Run_MoveState.tscn" id="4_e0iv0"]
+[ext_resource type="PackedScene" uid="uid://c2q8nmc6nku7c" path="res://Scenes/Components/MoveStates/Normal_BMoveState.tscn" id="3_gvgq6"]
+[ext_resource type="Resource" uid="uid://wdc536dvqnco" path="res://Data/Resources/TestShip1/MoveState_Normal.tres" id="4_vwomn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oysjy"]
 size = Vector2(40, 40)
@@ -22,8 +22,7 @@ position = Vector2(20, 20)
 shape = SubResource("RectangleShape2D_oysjy")
 
 [node name="Movement_StateMachine" parent="." node_paths=PackedStringArray("startState") instance=ExtResource("2_xmewg")]
-startState = NodePath("Walk_MoveState")
+startState = NodePath("Normal_BMoveState")
 
-[node name="Walk_MoveState" parent="Movement_StateMachine" instance=ExtResource("4_a600j")]
-
-[node name="Run_MoveState" parent="Movement_StateMachine" instance=ExtResource("4_e0iv0")]
+[node name="Normal_BMoveState" parent="Movement_StateMachine" instance=ExtResource("3_gvgq6")]
+normal_MoveStateData = ExtResource("4_vwomn")
