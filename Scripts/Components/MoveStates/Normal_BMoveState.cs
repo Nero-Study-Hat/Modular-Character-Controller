@@ -11,7 +11,6 @@ public partial class Normal_BMoveState : Base_MoveState
 
     Vector2 direction = new Vector2();
 
-
     // Connect up component nodes.
     public override void _Ready()
     {
@@ -33,8 +32,6 @@ public partial class Normal_BMoveState : Base_MoveState
     {
         moveVelocity.Initialize_MoveSpeedData(normal_MoveStateData.MoveSpeedBase, normal_MoveStateData.MoveSpeedAcceleration, normal_MoveStateData.MoveSpeedFriction);
     }
-
-    public override void Exit(CharacterBody2D entity) {}
 
 
     public override void Process(CharacterBody2D entity) {}
@@ -58,4 +55,6 @@ public partial class Normal_BMoveState : Base_MoveState
         entity.Velocity = moveVelocity.GetVelocity();
         entity.MoveAndSlide();
     }
+
+    public override void Exit(CharacterBody2D entity) {}
 }

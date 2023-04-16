@@ -1,32 +1,34 @@
 using Godot;
+using System;
 
 public class PlayerMoveStates_Conditions
 {
-    Player player = new Player();
-    Movement_StateMachine moveStatesManager = new Movement_StateMachine();
+    CharacterBody2D player;
+    Movement_StateMachine movement_StateMachine;
 
-    public void SetClasses()
+    public PlayerMoveStates_Conditions(CharacterBody2D EntityRef, Movement_StateMachine MoveStatesManager)
     {
-        player = player.GetPlayerRef();
-        moveStatesManager = moveStatesManager.GetMovement_StateMachine();
+        player = EntityRef;
+        movement_StateMachine = MoveStatesManager;
     }
 
     public void ConditionsChecker(Base_MoveState currentState, Base_MoveState[] moveStates) // call in process
     {
-        if (currentState == moveStatesManager.MoveStates[1])
+        
+        if (currentState == movement_StateMachine.MoveStates[0])
         {
             if (CheckState2() == true)
             {
-                moveStatesManager.ChangeState(moveStates[2]);
+                movement_StateMachine.ChangeState(moveStates[1]);
             }
             return;
         }
 
-        if (currentState == moveStatesManager.MoveStates[2])
+        if (currentState == movement_StateMachine.MoveStates[1])
         {
             if (CheckState1() == true)
             {
-                moveStatesManager.ChangeState(moveStates[1]);
+                movement_StateMachine.ChangeState(moveStates[0]);
             }
             return;
         }

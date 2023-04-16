@@ -5,22 +5,14 @@ using System;
 
 public partial class Movement_StateMachine : Node
 {
-    public CharacterBody2D Entity {get; set;} // change this type to work with other physics bodies
-
     [Export]
     Base_MoveState startState;
 
-    // [Export]
-    // Base_MoveState state0;
-    // [Export]
-    // Base_MoveState state1;
-    // [Export]
-    // Base_MoveState state2;
+    private CharacterBody2D entity;
+    private PlayerMoveStates_Conditions moveStates_Conditions;
 
     public Base_MoveState CurrentState {get; private set;}
     public Base_MoveState[] MoveStates {get; private set;}
-
-    // PlayerMoveStates_Conditions moveStates_Conditions = new PlayerMoveStates_Conditions();
 
     public Movement_StateMachine GetMovement_StateMachine()
     {
@@ -32,8 +24,8 @@ public partial class Movement_StateMachine : Node
 
     public void ChangeState(Base_MoveState newState)
     {
-        CurrentState.Exit(Entity);
-        newState.Enter(Entity);
+        CurrentState.Exit(entity);
+        newState.Enter(entity);
 
         CurrentState = newState;
         EmitSignal(SignalName.MoveState_Changed, newState);
@@ -42,6 +34,8 @@ public partial class Movement_StateMachine : Node
 
     public void Init(Player player)
     {
+        entity = player.GetPlayerRef();
+
         var numStates = this.GetChildCount();
         MoveStates = new Base_MoveState[numStates];
 
@@ -53,20 +47,22 @@ public partial class Movement_StateMachine : Node
             }
         }
 
-        startState.Enter(Entity);
+        startState.Enter(entity);
         CurrentState = startState;
+
+        moveStates_Conditions = new PlayerMoveStates_Conditions(entity, this);
     }
 
 
     public void Process()
     {
-        // moveStates_Conditions.ConditionsChecker(CurrentState, MoveStates);
-        CurrentState.Process(Entity);
+        moveStates_Conditions.ConditionsChecker(CurrentState, MoveStates);
+        CurrentState.Process(entity);
     }
 
     public void PhysicsProcess()
     {
-        CurrentState.PhysicsProcess(Entity);
+        CurrentState.PhysicsProcess(entity);
     }
 
 
