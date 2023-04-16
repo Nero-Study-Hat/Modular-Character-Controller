@@ -4,9 +4,9 @@ using Godot;
 
 public partial class VelocityComponent : Node, IMoveVelocity
 {
-    private float moveSpeedBase = 1f;
-    private float moveSpeedAcc = 1f;
-    private float MoveSpeedFric = 1f;
+    private float moveSpeedBase = 300f;
+    private float moveSpeedAcc = 6f;
+    private float MoveSpeedFric = 10f;
 
     private Vector2 velocity;
     private Vector2 direction;
@@ -14,9 +14,9 @@ public partial class VelocityComponent : Node, IMoveVelocity
 
     public void Initialize_MoveSpeedData(float MoveSpeedBase, float MoveSpeedAcceleration, float MoveSpeedFriction)
     {
-        moveSpeedBase = MoveSpeedBase;
-        moveSpeedAcc = MoveSpeedAcceleration;
-        MoveSpeedFric = MoveSpeedFriction;
+        // moveSpeedBase = MoveSpeedBase;
+        // moveSpeedAcc = MoveSpeedAcceleration;
+        // MoveSpeedFric = MoveSpeedFriction;
     }
 
     public void SetDirection(float position_x, float position_y)

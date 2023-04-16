@@ -20,7 +20,7 @@ public partial class Movement_StateMachine : Node
     public Base_MoveState CurrentState {get; private set;}
     public Base_MoveState[] MoveStates {get; private set;}
 
-    PlayerMoveStates_Conditions moveStates_Conditions = new PlayerMoveStates_Conditions();
+    // PlayerMoveStates_Conditions moveStates_Conditions = new PlayerMoveStates_Conditions();
 
     public Movement_StateMachine GetMovement_StateMachine()
     {
@@ -53,14 +53,14 @@ public partial class Movement_StateMachine : Node
             }
         }
 
+        startState.Enter(Entity);
         CurrentState = startState;
-        CurrentState.Enter(Entity);
     }
 
 
     public void Process()
     {
-        moveStates_Conditions.ConditionsChecker(CurrentState, MoveStates);
+        // moveStates_Conditions.ConditionsChecker(CurrentState, MoveStates);
         CurrentState.Process(Entity);
     }
 

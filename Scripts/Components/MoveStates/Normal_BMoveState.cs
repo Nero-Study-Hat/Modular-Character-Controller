@@ -31,7 +31,7 @@ public partial class Normal_BMoveState : Base_MoveState
     // Assign data from resource file(s) here.
     public override void Enter(CharacterBody2D entity)
     {
-        moveVelocity.Initialize_MoveSpeedData(normal_MoveStateData.MoveSpeedBase, normal_MoveStateData.MoveSpeedAcceleration, normal_MoveStateData.MoveSpeedFriction);
+        // moveVelocity.Initialize_MoveSpeedData(normal_MoveStateData.MoveSpeedBase, normal_MoveStateData.MoveSpeedAcceleration, normal_MoveStateData.MoveSpeedFriction);
     }
 
     public override void Exit(CharacterBody2D entity) {}

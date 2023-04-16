@@ -25,16 +25,16 @@ public partial class Player : CharacterBody2D
 
 	public override void _Process(double delta)
     {
-		this.Connect(Movement_StateMachine.SignalName.MoveState_Changed, new Callable(this, nameof(TestSignal)));
+		// this.Connect(Movement_StateMachine.SignalName.MoveState_Changed, new Callable(this, nameof(TestSignal))); // currently broken somehow ?
 
 		moveState_ChangeCondition();
         moveStates.Process();
     }
 
-	public void TestSignal()
-	{
-		GD.Print("Hello world.");
-	}
+	// public void TestSignal() // currently breaking somehow ?
+	// {
+	// 	GD.Print("Hello world.");
+	// }
 	
     public override void _PhysicsProcess(double delta)
     {
