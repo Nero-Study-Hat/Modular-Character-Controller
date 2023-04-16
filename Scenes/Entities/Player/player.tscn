@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://wst6ggh7rll8"]
+[gd_scene load_steps=7 format=3 uid="uid://wst6ggh7rll8"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/Player/Player.cs" id="1_uhu85"]
 [ext_resource type="PackedScene" uid="uid://db751d3jvmb8k" path="res://Scenes/Components/Movement_StateMachine.tscn" id="2_xmewg"]
+[ext_resource type="PackedScene" uid="uid://bt5murgpkyqrq" path="res://Scenes/Components/MoveStates/Idle_BMoveState.tscn" id="3_1nprw"]
 [ext_resource type="PackedScene" uid="uid://c2q8nmc6nku7c" path="res://Scenes/Components/MoveStates/Normal_BMoveState.tscn" id="3_gvgq6"]
 [ext_resource type="Resource" uid="uid://wdc536dvqnco" path="res://Data/Resources/TestShip1/MoveState_Normal.tres" id="4_vwomn"]
 
@@ -22,7 +23,9 @@ position = Vector2(20, 20)
 shape = SubResource("RectangleShape2D_oysjy")
 
 [node name="Movement_StateMachine" parent="." node_paths=PackedStringArray("startState") instance=ExtResource("2_xmewg")]
-startState = NodePath("Normal_BMoveState")
+startState = NodePath("Idle_BMoveState")
+
+[node name="Idle_BMoveState" parent="Movement_StateMachine" instance=ExtResource("3_1nprw")]
 
 [node name="Normal_BMoveState" parent="Movement_StateMachine" instance=ExtResource("3_gvgq6")]
 normal_MoveStateData = ExtResource("4_vwomn")

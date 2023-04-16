@@ -35,7 +35,6 @@ public partial class Movement_StateMachine : Node
     public void Init(Player player)
     {
         entity = player.GetPlayerRef();
-        moveStates_Conditions = new PlayerMoveStates_Conditions(entity, this, CurrentState, MoveStates);
 
         var numStates = this.GetChildCount();
         MoveStates = new Base_MoveState[numStates];
@@ -50,12 +49,14 @@ public partial class Movement_StateMachine : Node
 
         startState.Enter(entity);
         CurrentState = startState;
+
+        moveStates_Conditions = new PlayerMoveStates_Conditions(entity, this);
     }
 
 
     public void Process()
     {
-        // moveStates_Conditions.ConditionsChecker(CurrentState, MoveStates);
+        moveStates_Conditions.ConditionsChecker(CurrentState, MoveStates);
         CurrentState.Process(entity);
     }
 
