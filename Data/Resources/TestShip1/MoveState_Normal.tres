@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_oh1e5")
-MoveSpeedBase = 0.0
-MoveSpeedAcceleration = 0.0
-MoveSpeedFriction = 0.0
+MoveSpeedBase = 300.0
+MoveSpeedAcceleration = 6.0
+MoveSpeedFriction = 10.0
