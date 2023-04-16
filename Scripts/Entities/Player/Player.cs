@@ -14,7 +14,6 @@ public partial class Player : CharacterBody2D
 
     public override void _Ready()
     {
-		moveStates.Entity = this;
         moveStates.Init(this);
     }
 
