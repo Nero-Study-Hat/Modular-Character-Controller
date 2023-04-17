@@ -66,20 +66,10 @@ public partial class Movement_StateMachine : Node
     }
 
 
-    // Signal recievers to change move state.
-
-    // private void _on_player_move_state_change_0() // idle state
-    // {
-    //     Change(state0);
-    // }
-
-    private void _on_player_move_state_change_1()
+    public void LoadMoveState(Base_MoveState moveState)
     {
-        ChangeState(MoveStates[0]);
-    }
-
-    private void _on_player_move_state_change_2()
-    {
-        ChangeState(MoveStates[1]);
+        string ScenePath = "res://Components/StateMachine/MoveStates_Scenes/" + moveState + ".tscn";
+        var SceneInstance = ResourceLoader.Load<PackedScene>(ScenePath).Instantiate();
+        AddChild(SceneInstance); // not sure yet here
     }
 }
