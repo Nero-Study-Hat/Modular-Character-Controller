@@ -11,11 +11,11 @@ public class BNormal_SwitchCheck:ISwitchMoveStates_Check
         movement_StateMachine = MoveStatesManager;
     }
 
-    public void ConditionsChecker(Base_MoveState[] moveStates) // call in process
+    public void ConditionsChecker() // call in process
     {
         if (CheckState1() == true)
         {
-            movement_StateMachine.ChangeState(moveStates[0]);
+            movement_StateMachine.ChangeState(movement_StateMachine.MoveStates[0]);
         }
     }
     

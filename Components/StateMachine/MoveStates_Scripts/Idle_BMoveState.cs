@@ -11,6 +11,7 @@ public partial class Idle_BMoveState : Base_MoveState
     //     this.WireNodes();
     // }
 
+
     public override void Enter(CharacterBody2D entity) {}
 
     public override void Exit(CharacterBody2D entity) {}

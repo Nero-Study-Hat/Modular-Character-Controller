@@ -2,7 +2,7 @@ using Godot;
 using MonoCustomResourceRegistry;
 
 [RegisteredType(nameof(TestShip1Data), "", nameof(Resource))]
-public partial class TestShip1Data : Resource
+public partial class TestShip1Data : BaseMoveData
 {
     [ExportCategory("Movement Variables")]
     [Export] public float MoveSpeedBase {get; set;}

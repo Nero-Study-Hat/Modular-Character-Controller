@@ -6,6 +6,9 @@ public partial class Normal_BMoveState : Base_MoveState
     IMoveVelocity moveVelocity;
     IGetDirection getDirection;
 
+    ISwitchMoveStates_Check switchMoveStates_Check;
+    ISpawnMoveStates_Check spawnMoveStates_Check;
+
     [Export]
     private TestShip1Data normal_MoveStateData;
 
@@ -27,9 +30,12 @@ public partial class Normal_BMoveState : Base_MoveState
         }
     }
 
-    // Assign data from resource file(s) here.
+    // Initilization -> Resource & Script Dependencies
     public override void Enter(CharacterBody2D entity)
     {
+        // connect up conditions script dependencies
+        InitializeCheckDependencies(entity, this, switchMoveStates_Check, spawnMoveStates_Check);
+        // resource values setup
         moveVelocity.Initialize_MoveSpeedData(normal_MoveStateData.MoveSpeedBase, normal_MoveStateData.MoveSpeedAcceleration, normal_MoveStateData.MoveSpeedFriction);
     }
 
