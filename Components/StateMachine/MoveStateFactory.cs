@@ -11,16 +11,13 @@ public class MoveStateFactory
         moveStates = MoveStates;
     }
 
-    public void CustomMoveState_Path()
-    {
-        string ScenePath = "res://Components/StateMachine/MoveStates_Scenes/" + moveStates + ".tscn";
-        var SceneInstance = ResourceLoader.Load<PackedScene>(ScenePath).Instantiate();
-        stateMachine.AddChild(SceneInstance); // not sure yet here
-    }
+    string DirPathMoveStates = "res://Components/StateMachine/MoveStates_Scenes/";
 
-    public void GenerateState()
+
+    public void BNormal()
     {
-        string ScenePath = "res://Components/StateMachine/MoveStates_Scenes/" + moveStates + ".tscn";
+        string Scene = "Normal_BMoveState";
+        string ScenePath = DirPathMoveStates + "/" + Scene + ".tscn";
         var SceneInstance = ResourceLoader.Load<PackedScene>(ScenePath).Instantiate();
         stateMachine.AddChild(SceneInstance); // not sure yet here
     }
