@@ -1,6 +1,6 @@
 using Godot;
 
-public class BaseMoveData : Resource
+public partial class BaseMoveData : Resource
 {
     // Type
 }

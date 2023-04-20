@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Normal_BMoveState : Base_MoveState
+partial class BNormal_MS : Base_MoveState
 {
     IMoveVelocity moveVelocity;
     IGetDirection getDirection;
@@ -35,12 +35,18 @@ public partial class Normal_BMoveState : Base_MoveState
     {
         // connect up conditions script dependencies
         InitializeCheckDependencies(entity, this, switchMoveStates_Check, spawnMoveStates_Check);
+
+        switchMoveStates_Check.Initialize(entity, this.GetOwner<Movement_StateMachine>());
+
         // resource values setup
         moveVelocity.Initialize_MoveSpeedData(normal_MoveStateData.MoveSpeedBase, normal_MoveStateData.MoveSpeedAcceleration, normal_MoveStateData.MoveSpeedFriction);
     }
 
 
-    public override void Process(CharacterBody2D entity) {}
+    public override void Process(CharacterBody2D entity) 
+    {
+        switchMoveStates_Check.ConditionsChecker();
+    }
 
     // Handle direction and velocity with MoveAndSlide.
     public override void PhysicsProcess(CharacterBody2D entity)

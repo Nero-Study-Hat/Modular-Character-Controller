@@ -1,6 +1,6 @@
 using Godot;
 
-public class BNormal_SwitchCheck:ISwitchMoveStates_Check
+public class BNormal_MS_SwitchCheck:ISwitchMoveStates_Check
 {
     CharacterBody2D player;
     Movement_StateMachine movement_StateMachine;

@@ -1,6 +1,6 @@
 using Godot;
 
-public class TemplateMoveState:Base_MoveState
+public partial class TemplateMoveState:Base_MoveState
 {
     Movement_StateMachine stateMachine;
 

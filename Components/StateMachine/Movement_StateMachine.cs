@@ -37,6 +37,11 @@ public partial class Movement_StateMachine : Node
     public void Init(Player player)
     {
         entity = player.GetPlayerRef();
+        var entityName = entity.GetType().ToString;
+        string entityFileName = "" + entityName;
+
+        Node entityScript = new Node();
+        string entityFile = entityScript.GetType().ToString();
 
         var numStates = this.GetChildCount();
         MoveStates = new Base_MoveState[numStates];
@@ -51,6 +56,11 @@ public partial class Movement_StateMachine : Node
 
         startState.Enter(entity);
         CurrentState = startState;
+
+        switchCheck = LoadSwitchCheck_Script(entityFileName);
+        spawnCheck = LoadSpawnCheck_Script(entity);
+
+        switchCheck.Initialize(entity, this);
     }
 
 
@@ -62,5 +72,23 @@ public partial class Movement_StateMachine : Node
     public void PhysicsProcess()
     {
         CurrentState.PhysicsProcess(entity);
+    }
+
+
+    public ISwitchMoveStates_Check LoadSwitchCheck_Script(string entityFileName)
+    {
+        string path = "res://Scripts/Entities/" + entityFileName + "/" + entityFileName + "MoveStates_SwitchCheck" + ".cs";
+        ISwitchMoveStates_Check _switchCheck = GD.Load<ISwitchMoveStates_Check>(path);
+
+        return _switchCheck;
+    }
+
+    public ISpawnMoveStates_Check LoadSpawnCheck_Script(Node entityRef)
+    {
+        var entityFileName = entityRef.GetType().ToString;
+        string path = "res://Scripts/Entities/" + entityFileName + "/" + entityFileName + "MoveStates_SpawnCheck" + ".cs";
+        ISpawnMoveStates_Check _spawnCheck = GD.Load<ISpawnMoveStates_Check>(path);
+
+        return _spawnCheck;
     }
 }

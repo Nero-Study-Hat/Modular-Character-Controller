@@ -1,18 +1,24 @@
 using Godot;
 using System;
 
-public class PlayerMoveStates_Conditions
+public class PlayerMoveStates_SwitchCheck:ISwitchMoveStates_Check
 {
     CharacterBody2D player;
     Movement_StateMachine movement_StateMachine;
 
-    public PlayerMoveStates_Conditions(CharacterBody2D EntityRef, Movement_StateMachine MoveStatesManager)
+    Base_MoveState currentState;
+    Base_MoveState[] moveStates;
+
+    public void Initialize(CharacterBody2D EntityRef, Movement_StateMachine MoveStatesManager)
     {
         player = EntityRef;
         movement_StateMachine = MoveStatesManager;
+        
+        currentState = movement_StateMachine.CurrentState;
+        moveStates = movement_StateMachine.MoveStates;
     }
 
-    public void ConditionsChecker(Base_MoveState currentState, Base_MoveState[] moveStates) // call in process
+    public void ConditionsChecker() // call in process
     {
         
         if (currentState == movement_StateMachine.MoveStates[0])
