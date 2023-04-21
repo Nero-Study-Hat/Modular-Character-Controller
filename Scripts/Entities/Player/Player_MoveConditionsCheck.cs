@@ -14,7 +14,7 @@ public partial class Player_MoveConditionsCheck : BaseConditionsCheck
 
     Dictionary<MoveStateFactory.MoveStates, Action> allConditionsDict = new Dictionary<MoveStateFactory.MoveStates, Action>();
 
-    // Dictionary<MoveStateFactory.MoveStates, Action> conditionChecksDict = new Dictionary<MoveStateFactory.MoveStates, Action>();
+    // Try testing spawning here with the area2d and a signal.
 
     private void SetAllStateChecks()
     {
@@ -44,19 +44,41 @@ public partial class Player_MoveConditionsCheck : BaseConditionsCheck
     }
 
 
-    public void BIdle_Check()
+    private void BIdle_Check()
     {
-        if (Input.IsActionJustPressed("moveState_run"))
+        var _BNormal_EnterCheck = BIdle_EnterCheck();
+        if (_BNormal_EnterCheck == true)
         {
             movement_StateMachine.ChangeState(entityStateDict[MoveStateFactory.MoveStates.BNormal_MoveState]);
+            return;
         }
     }
 
-    public void BNormal_Check()
+    private void BNormal_Check()
+    {
+        var _BIdle_EnterCheck = BIdle_EnterCheck();
+        if (_BIdle_EnterCheck == true)
+        {
+            movement_StateMachine.ChangeState(entityStateDict[MoveStateFactory.MoveStates.BIdle_MoveState]);
+            return;
+        }
+    }
+
+    private bool BIdle_EnterCheck()
     {
         if (Input.IsActionJustPressed("moveState_walk"))
         {
-            movement_StateMachine.ChangeState(entityStateDict[MoveStateFactory.MoveStates.BIdle_MoveState]);
+            return true;
         }
+        return false;
+    }
+
+    private bool BNormal_EnterCheck()
+    {
+        if (Input.IsActionJustPressed("moveState_run"))
+        {
+            return true;
+        }
+        return false;
     }
 }

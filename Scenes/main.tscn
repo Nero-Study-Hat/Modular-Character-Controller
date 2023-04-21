@@ -1,3 +1,23 @@
-[gd_scene format=3 uid="uid://d3ak5ylaj656e"]
+[gd_scene load_steps=3 format=3 uid="uid://d3ak5ylaj656e"]
+
+[ext_resource type="PackedScene" uid="uid://cn7uwl4ic3tp7" path="res://Scenes/Entities/Player/player.tscn" id="1_8a7sf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ox2td"]
+size = Vector2(64, 56)
 
 [node name="main" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_8a7sf")]
+
+[node name="TestSpawnState" type="Area2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="TestSpawnState"]
+offset_left = 232.0
+offset_top = 88.0
+offset_right = 296.0
+offset_bottom = 144.0
+color = Color(0.443137, 1, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestSpawnState"]
+position = Vector2(264, 116)
+shape = SubResource("RectangleShape2D_ox2td")

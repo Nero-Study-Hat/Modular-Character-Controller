@@ -23,19 +23,14 @@ offset_bottom = 40.0
 position = Vector2(20, 20)
 shape = SubResource("RectangleShape2D_oysjy")
 
-[node name="Movement_StateMachine" parent="." node_paths=PackedStringArray("startState", "ConditionCheckGroup", "switchCheck") instance=ExtResource("2_xmewg")]
+[node name="Movement_StateMachine" parent="." node_paths=PackedStringArray("startState", "conditionsCheck") instance=ExtResource("2_xmewg")]
 startState = NodePath("BIdle_MoveState")
-ConditionCheckGroup = NodePath("../ConditionsCheckGroup")
-switchCheck = NodePath("../ConditionsCheckGroup/Player_MoveSwitchCheck")
+conditionsCheck = NodePath("../Player_MoveConditionsCheck")
 
 [node name="BIdle_MoveState" parent="Movement_StateMachine" instance=ExtResource("3_1nprw")]
 
 [node name="BNormal_MoveState" parent="Movement_StateMachine" instance=ExtResource("4_sb2hy")]
 normal_MoveStateData = ExtResource("5_5xcaj")
 
-[node name="ConditionsCheckGroup" type="Node" parent="."]
-
-[node name="Player_MoveSwitchCheck" type="Node" parent="ConditionsCheckGroup"]
+[node name="Player_MoveConditionsCheck" type="Node" parent="."]
 script = ExtResource("5_ltbuk")
-
-[node name="Player_MoveSpawnCheck" type="Node" parent="ConditionsCheckGroup"]

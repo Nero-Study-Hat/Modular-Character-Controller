@@ -8,13 +8,11 @@ public partial class Movement_StateMachine : Node
 {
     [Export]
     Base_MoveState startState;
-    [Export]
-    Node ConditionCheckGroup = new Node();
 
     private CharacterBody2D entity;
 
     [Export]
-    BaseConditionsCheck switchCheck;
+    BaseConditionsCheck conditionsCheck;
 
     public Base_MoveState CurrentState {get; private set;}
     public MoveStateFactory.MoveStates EnumVal_CurrentState;
@@ -50,7 +48,7 @@ public partial class Movement_StateMachine : Node
         entity = this.GetParent<CharacterBody2D>();
         GetStates();
 
-        switchCheck.Initialize(entity, this);
+        conditionsCheck.Initialize(entity, this);
 
         var StringVal_CurrentState = CurrentState.GetType().ToString();
         EnumVal_CurrentState = (MoveStateFactory.MoveStates)Enum.Parse(typeof(MoveStateFactory.MoveStates), StringVal_CurrentState);
@@ -59,7 +57,7 @@ public partial class Movement_StateMachine : Node
 
     public void Process()
     {
-        switchCheck.ConditionsChecker();
+        conditionsCheck.ConditionsChecker();
         CurrentState.Process(entity);
     }
 
