@@ -8,17 +8,12 @@ public partial class Movement_StateMachine : Node
 {
     [Export]
     Base_MoveState startState;
-    [Export]
-    Node ConditionCheckGroup = new Node();
 
     private CharacterBody2D entity;
-    // private PlayerMoveStates_Conditions moveStates_Conditions;
+    private BaseMoveData[] statesResources;
 
     [Export]
-    BaseSwitchCheck switchCheck;
-
-    // private ISwitchMoveStates_Check switchCheck;
-    // private ISpawnMoveStates_Check spawnCheck;
+    BaseConditionsCheck conditionsCheck;
 
     public Base_MoveState CurrentState {get; private set;}
     public MoveStateFactory.MoveStates EnumVal_CurrentState;
@@ -37,7 +32,7 @@ public partial class Movement_StateMachine : Node
     public void ChangeState(Base_MoveState newState)
     {
         CurrentState.Exit(entity);
-        newState.Enter(entity);
+        newState.Enter(entity, statesResources);
 
         CurrentState = newState;
         var StringVal_CurrentState = CurrentState.GetType().ToString();
@@ -46,31 +41,26 @@ public partial class Movement_StateMachine : Node
     }
 
 
-    public void Init()
+    public void Init(BaseMoveData[] StatesResources)
     {
-        startState.Enter(entity);
-        CurrentState = startState;
-
         entity = this.GetParent<CharacterBody2D>();
-
         GetStates();
 
-        // ConnectConditionsScripts(entity);
-        // switchCheck = conditionsCheckGroup.GetSwitchScript();
-        
-        switchCheck.Initialize(entity, this);
+        statesResources = StatesResources;
+
+        startState.Enter(entity, statesResources);
+        CurrentState = startState;
 
         var StringVal_CurrentState = CurrentState.GetType().ToString();
         EnumVal_CurrentState = (MoveStateFactory.MoveStates)Enum.Parse(typeof(MoveStateFactory.MoveStates), StringVal_CurrentState);
+
+        conditionsCheck.Initialize(entity, this);
     }
 
 
     public void Process()
     {
-        if (switchCheck != null)
-        {
-            switchCheck.ConditionsChecker();
-        }
+        conditionsCheck.ConditionsChecker();
         CurrentState.Process(entity);
     }
 
@@ -92,23 +82,4 @@ public partial class Movement_StateMachine : Node
             entityMoveStatesDict.Add(stateEnumVal, stateNode);
         }
     }
-
-    // private void ConnectConditionsScripts(CharacterBody2D entity)
-    // {
-    //     for (int index = 0; index < ConditionCheckGroup.GetChildCount(); index++)
-    //     {
-    //         var node = ConditionCheckGroup.GetChild(index);
-
-    //         if (node is ISwitchMoveStates_Check)
-    //         {
-    //             switchCheck = this.GetChild<ISwitchMoveStates_Check>(index);
-    //             switchCheck.Initialize(entity, this);
-    //         }
-    //         if (node is ISpawnMoveStates_Check)
-    //         {
-    //             spawnCheck = this.GetChild<ISpawnMoveStates_Check>(index);
-    //             spawnCheck.Initialize(entity, this);
-    //         }
-    //     }
-    // }
 }

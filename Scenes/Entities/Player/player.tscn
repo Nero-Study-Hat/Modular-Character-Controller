@@ -1,12 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2ljwo5pxxn5e"]
+[gd_scene load_steps=7 format=3 uid="uid://cn7uwl4ic3tp7"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/Player/Player.cs" id="1_uhu85"]
+[ext_resource type="Resource" uid="uid://bn6blwoymkxei" path="res://Data/Entity/Player/MoveStates_Data/BNormal/generic_v1.tres" id="2_25umj"]
 [ext_resource type="PackedScene" path="res://Components/StateMachine/Movement_StateMachine.tscn" id="2_xmewg"]
 [ext_resource type="PackedScene" uid="uid://croppr1elpb5p" path="res://Components/StateMachine/MoveStates_Scenes/BIdle_MoveState.tscn" id="3_1nprw"]
-[ext_resource type="PackedScene" path="res://Components/StateMachine/MoveStates_Scenes/BNormal_MoveState.tscn" id="4_sb2hy"]
-[ext_resource type="Resource" uid="uid://wdc536dvqnco" path="res://Data/Resources/TestShip1/MoveState_Normal.tres" id="5_5xcaj"]
-[ext_resource type="Script" path="res://Scripts/Entities/Player/Player_MoveSwitchCheck.cs" id="5_ltbuk"]
-[ext_resource type="Script" path="res://Scenes/Entities/Player/ConditionsCheckGroup.cs" id="7_4teqj"]
+[ext_resource type="Script" path="res://Scripts/Entities/Player/Player_MoveConditionsCheck.cs" id="5_ltbuk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oysjy"]
 size = Vector2(40, 40)
@@ -14,6 +12,7 @@ size = Vector2(40, 40)
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("moveStatesManager")]
 script = ExtResource("1_uhu85")
 moveStatesManager = NodePath("Movement_StateMachine")
+bNormalData = ExtResource("2_25umj")
 metadata/_edit_group_ = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -24,20 +23,11 @@ offset_bottom = 40.0
 position = Vector2(20, 20)
 shape = SubResource("RectangleShape2D_oysjy")
 
-[node name="Movement_StateMachine" parent="." node_paths=PackedStringArray("startState", "ConditionCheckGroup", "switchCheck") instance=ExtResource("2_xmewg")]
+[node name="Movement_StateMachine" parent="." node_paths=PackedStringArray("startState", "conditionsCheck") instance=ExtResource("2_xmewg")]
 startState = NodePath("BIdle_MoveState")
-ConditionCheckGroup = NodePath("../ConditionsCheckGroup")
-switchCheck = NodePath("../ConditionsCheckGroup/Player_MoveSwitchCheck")
+conditionsCheck = NodePath("../Player_MoveConditionsCheck")
 
 [node name="BIdle_MoveState" parent="Movement_StateMachine" instance=ExtResource("3_1nprw")]
 
-[node name="BNormal_MoveState" parent="Movement_StateMachine" instance=ExtResource("4_sb2hy")]
-normal_MoveStateData = ExtResource("5_5xcaj")
-
-[node name="ConditionsCheckGroup" type="Node" parent="."]
-script = ExtResource("7_4teqj")
-
-[node name="Player_MoveSwitchCheck" type="Node" parent="ConditionsCheckGroup"]
+[node name="Player_MoveConditionsCheck" type="Node" parent="."]
 script = ExtResource("5_ltbuk")
-
-[node name="Player_MoveSpawnCheck" type="Node" parent="ConditionsCheckGroup"]

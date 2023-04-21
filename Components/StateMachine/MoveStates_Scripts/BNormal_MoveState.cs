@@ -6,9 +6,6 @@ partial class BNormal_MoveState : Base_MoveState
     IMoveVelocity moveVelocity;
     IGetDirection getDirection;
 
-    [Export]
-    private TestShip1Data normal_MoveStateData;
-
     Vector2 direction = new Vector2();
 
     // Connect up component nodes.
@@ -28,9 +25,15 @@ partial class BNormal_MoveState : Base_MoveState
     }
 
 
-    public override void Enter(CharacterBody2D entity)
+    public override void Enter(CharacterBody2D entity, BaseMoveData[] stateData)
     {
-        moveVelocity.Initialize_MoveSpeedData(normal_MoveStateData.MoveSpeedBase, normal_MoveStateData.MoveSpeedAcceleration, normal_MoveStateData.MoveSpeedFriction);
+        foreach (BaseMoveData dataRes in stateData)
+        {
+            if (dataRes is BNormal_Data bNormal_Data)
+            {
+                moveVelocity.Initialize_MoveSpeedData(bNormal_Data.MoveSpeedBase, bNormal_Data.MoveSpeedAcceleration, bNormal_Data.MoveSpeedFriction);
+            }
+        }
     }
 
 

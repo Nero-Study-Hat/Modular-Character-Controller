@@ -3,16 +3,7 @@ using System;
 
 public partial class BIdle_MoveState : Base_MoveState
 {
-    // [Node]
-    // private VelocityComponent velocityComponent;
-
-    // public override void _EnterTree()
-    // {
-    //     this.WireNodes();
-    // }
-
-
-    public override void Enter(CharacterBody2D entity) {}
+    public override void Enter(CharacterBody2D entity, BaseMoveData[] stateData) {}
 
     public override void Exit(CharacterBody2D entity) {}
 
