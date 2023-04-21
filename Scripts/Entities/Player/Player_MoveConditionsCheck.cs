@@ -26,8 +26,8 @@ public partial class Player_MoveConditionsCheck : BaseConditionsCheck
 
     private void SetInitialStateChecks()
     {
-        // currentConditionsDict.Add(MoveStateFactory.MoveStates.BIdle_MoveState, BIdle_CheckConditions);
-        currentConditionsDict.Add(MoveStateFactory.MoveStates.BNormal_MoveState, BNormal_CheckConditions);
+        currentConditionsDict.Add(MoveStateFactory.MoveStates.BIdle_MoveState, BIdle_CheckConditions);
+        // currentConditionsDict.Add(MoveStateFactory.MoveStates.BNormal_MoveState, BNormal_CheckConditions);
     }
 
     public override void Initialize(CharacterBody2D EntityRef, Movement_StateMachine MoveStatesManager)
@@ -52,6 +52,7 @@ public partial class Player_MoveConditionsCheck : BaseConditionsCheck
     private void BIdle_CheckConditions()
     {
         BIdle_CheckSwitch();
+        BIdle_CheckSpawn();
     }
 
     private void BNormal_CheckConditions()
@@ -75,11 +76,16 @@ public partial class Player_MoveConditionsCheck : BaseConditionsCheck
         }
     }
 
-    private void BIdle_CheckSpawn() // Currently not called.
+    private void BIdle_CheckSpawn()
     {
         if (entityStateDict.ContainsKey(MoveStateFactory.MoveStates.BNormal_MoveState) == false) // Check BNormal Spawn (Currently empty)
         {
-            //
+            var statusBNormal = BNormal_SpawnNewCheck();
+            if (statusBNormal == true)
+            {
+                moveStateFactory.SpawnMoveState(MoveStateFactory.MoveStates.BNormal_MoveState, allConditionsDict, currentConditionsDict);
+                return;
+            }
         }
     }
 

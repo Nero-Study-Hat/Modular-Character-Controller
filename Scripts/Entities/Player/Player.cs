@@ -3,8 +3,13 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+
 	[Export]
 	private Movement_StateMachine moveStatesManager = new Movement_StateMachine();
+
+    [ExportGroup("Resource Files")]
+    [Export]
+    private BaseMoveData bNormalData;
 
 // in the future maybe setup a log for who is accessing this if needed
 	public Player GetPlayerRef()
@@ -14,7 +19,8 @@ public partial class Player : CharacterBody2D
 
     public override void _Ready()
     {
-        moveStatesManager.Init();
+        BaseMoveData[] statesResources = new BaseMoveData[] {bNormalData};
+        moveStatesManager.Init(statesResources);
     }
 
 	public override void _Process(double delta)
