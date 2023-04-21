@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://cn7uwl4ic3tp7"]
+[gd_scene load_steps=7 format=3 uid="uid://cn7uwl4ic3tp7"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/Player/Player.cs" id="1_uhu85"]
 [ext_resource type="PackedScene" path="res://Components/StateMachine/Movement_StateMachine.tscn" id="2_xmewg"]
-[ext_resource type="PackedScene" uid="uid://croppr1elpb5p" path="res://Components/StateMachine/MoveStates_Scenes/BIdle_MoveState.tscn" id="3_1nprw"]
 [ext_resource type="PackedScene" path="res://Components/StateMachine/MoveStates_Scenes/BNormal_MoveState.tscn" id="4_sb2hy"]
 [ext_resource type="Resource" uid="uid://wdc536dvqnco" path="res://Data/Resources/TestShip1/MoveState_Normal.tres" id="5_5xcaj"]
 [ext_resource type="Script" path="res://Scripts/Entities/Player/Player_MoveConditionsCheck.cs" id="5_ltbuk"]
@@ -24,10 +23,8 @@ position = Vector2(20, 20)
 shape = SubResource("RectangleShape2D_oysjy")
 
 [node name="Movement_StateMachine" parent="." node_paths=PackedStringArray("startState", "conditionsCheck") instance=ExtResource("2_xmewg")]
-startState = NodePath("BIdle_MoveState")
+startState = NodePath("BNormal_MoveState")
 conditionsCheck = NodePath("../Player_MoveConditionsCheck")
-
-[node name="BIdle_MoveState" parent="Movement_StateMachine" instance=ExtResource("3_1nprw")]
 
 [node name="BNormal_MoveState" parent="Movement_StateMachine" instance=ExtResource("4_sb2hy")]
 normal_MoveStateData = ExtResource("5_5xcaj")
