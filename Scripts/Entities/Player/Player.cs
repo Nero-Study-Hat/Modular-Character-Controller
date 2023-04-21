@@ -17,11 +17,6 @@ public partial class Player : CharacterBody2D
         moveStatesManager.Init();
     }
 
-	public override void _UnhandledInput(InputEvent @event)
-    {
-        //
-    }
-
 	public override void _Process(double delta)
     {
         moveStatesManager.Process();

@@ -12,13 +12,9 @@ public partial class Movement_StateMachine : Node
     Node ConditionCheckGroup = new Node();
 
     private CharacterBody2D entity;
-    // private PlayerMoveStates_Conditions moveStates_Conditions;
 
     [Export]
-    BaseSwitchCheck switchCheck;
-
-    // private ISwitchMoveStates_Check switchCheck;
-    // private ISpawnMoveStates_Check spawnCheck;
+    BaseConditionsCheck switchCheck;
 
     public Base_MoveState CurrentState {get; private set;}
     public MoveStateFactory.MoveStates EnumVal_CurrentState;
@@ -52,12 +48,8 @@ public partial class Movement_StateMachine : Node
         CurrentState = startState;
 
         entity = this.GetParent<CharacterBody2D>();
-
         GetStates();
 
-        // ConnectConditionsScripts(entity);
-        // switchCheck = conditionsCheckGroup.GetSwitchScript();
-        
         switchCheck.Initialize(entity, this);
 
         var StringVal_CurrentState = CurrentState.GetType().ToString();
@@ -67,10 +59,7 @@ public partial class Movement_StateMachine : Node
 
     public void Process()
     {
-        if (switchCheck != null)
-        {
-            switchCheck.ConditionsChecker();
-        }
+        switchCheck.ConditionsChecker();
         CurrentState.Process(entity);
     }
 
@@ -92,23 +81,4 @@ public partial class Movement_StateMachine : Node
             entityMoveStatesDict.Add(stateEnumVal, stateNode);
         }
     }
-
-    // private void ConnectConditionsScripts(CharacterBody2D entity)
-    // {
-    //     for (int index = 0; index < ConditionCheckGroup.GetChildCount(); index++)
-    //     {
-    //         var node = ConditionCheckGroup.GetChild(index);
-
-    //         if (node is ISwitchMoveStates_Check)
-    //         {
-    //             switchCheck = this.GetChild<ISwitchMoveStates_Check>(index);
-    //             switchCheck.Initialize(entity, this);
-    //         }
-    //         if (node is ISpawnMoveStates_Check)
-    //         {
-    //             spawnCheck = this.GetChild<ISpawnMoveStates_Check>(index);
-    //             spawnCheck.Initialize(entity, this);
-    //         }
-    //     }
-    // }
 }

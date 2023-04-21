@@ -1,12 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2ljwo5pxxn5e"]
+[gd_scene load_steps=8 format=3 uid="uid://cn7uwl4ic3tp7"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/Player/Player.cs" id="1_uhu85"]
 [ext_resource type="PackedScene" path="res://Components/StateMachine/Movement_StateMachine.tscn" id="2_xmewg"]
 [ext_resource type="PackedScene" uid="uid://croppr1elpb5p" path="res://Components/StateMachine/MoveStates_Scenes/BIdle_MoveState.tscn" id="3_1nprw"]
 [ext_resource type="PackedScene" path="res://Components/StateMachine/MoveStates_Scenes/BNormal_MoveState.tscn" id="4_sb2hy"]
 [ext_resource type="Resource" uid="uid://wdc536dvqnco" path="res://Data/Resources/TestShip1/MoveState_Normal.tres" id="5_5xcaj"]
-[ext_resource type="Script" path="res://Scripts/Entities/Player/Player_MoveSwitchCheck.cs" id="5_ltbuk"]
-[ext_resource type="Script" path="res://Scenes/Entities/Player/ConditionsCheckGroup.cs" id="7_4teqj"]
+[ext_resource type="Script" path="res://Scripts/Entities/Player/Player_MoveConditionsCheck.cs" id="5_ltbuk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oysjy"]
 size = Vector2(40, 40)
@@ -35,7 +34,6 @@ switchCheck = NodePath("../ConditionsCheckGroup/Player_MoveSwitchCheck")
 normal_MoveStateData = ExtResource("5_5xcaj")
 
 [node name="ConditionsCheckGroup" type="Node" parent="."]
-script = ExtResource("7_4teqj")
 
 [node name="Player_MoveSwitchCheck" type="Node" parent="ConditionsCheckGroup"]
 script = ExtResource("5_ltbuk")

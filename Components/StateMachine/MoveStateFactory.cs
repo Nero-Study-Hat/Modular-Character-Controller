@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 public class MoveStateFactory
@@ -20,14 +21,18 @@ public class MoveStateFactory
         BNormal_MoveState
     }
 
-    string DirPathMoveStates = "res://Components/StateMachine/MoveStates_Scenes/";
+    //  Look into reflection to better unstand calling
+    //  check functions for only states that exists in 
+    //  the entity stateDict.
 
-
-    public void BNormal()
+    public void SpawnMoveState(MoveStates moveState, Dictionary<MoveStates, Action> allConditionsDict, Dictionary<MoveStates, Action> currentConditionsDict)
     {
-        string Scene = "Normal_BMoveState";
-        string ScenePath = DirPathMoveStates + "/" + Scene + ".tscn";
-        var SceneInstance = ResourceLoader.Load<PackedScene>(ScenePath).Instantiate();
-        stateMachine.AddChild(SceneInstance); // not sure yet here
+        string DirPathMoveStates = "res://Components/StateMachine/MoveStates_Scenes/";
+        string ScenePath = DirPathMoveStates + "/" + moveState.ToString() + ".tscn";
+        var SceneInstance = (Base_MoveState)ResourceLoader.Load<PackedScene>(ScenePath).Instantiate();
+        stateMachine.AddChild(SceneInstance);
+
+        statesDict.Add(moveState, SceneInstance);
+        currentConditionsDict.Add(moveState, allConditionsDict[moveState]);
     }
 }
