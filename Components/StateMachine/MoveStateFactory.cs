@@ -1,14 +1,23 @@
 using Godot;
+using System.Collections.Generic;
 
 public class MoveStateFactory
 {
     Movement_StateMachine stateMachine;
-    Base_MoveState[] moveStates;
+    Dictionary<MoveStates, Base_MoveState> statesDict;
 
-    public MoveStateFactory(Movement_StateMachine MoveStates_StateMachine, Base_MoveState[] MoveStates)
+    public MoveStateFactory(Movement_StateMachine MoveStates_StateMachine)
     {
         stateMachine = MoveStates_StateMachine;
-        moveStates = MoveStates;
+        statesDict = stateMachine.entityMoveStatesDict;
+        
+    }
+
+
+    public enum MoveStates
+    {
+        BIdle_MoveState,
+        BNormal_MoveState
     }
 
     string DirPathMoveStates = "res://Components/StateMachine/MoveStates_Scenes/";
