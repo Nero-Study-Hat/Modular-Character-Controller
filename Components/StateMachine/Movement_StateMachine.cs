@@ -10,6 +10,7 @@ public partial class Movement_StateMachine : Node
     Base_MoveState startState;
 
     private CharacterBody2D entity;
+    private BaseMoveData[] statesResources;
 
     [Export]
     BaseConditionsCheck conditionsCheck;
@@ -31,7 +32,7 @@ public partial class Movement_StateMachine : Node
     public void ChangeState(Base_MoveState newState)
     {
         CurrentState.Exit(entity);
-        newState.Enter(entity);
+        newState.Enter(entity, statesResources);
 
         CurrentState = newState;
         var StringVal_CurrentState = CurrentState.GetType().ToString();
@@ -40,18 +41,20 @@ public partial class Movement_StateMachine : Node
     }
 
 
-    public void Init()
+    public void Init(BaseMoveData[] StatesResources)
     {
-        startState.Enter(entity);
-        CurrentState = startState;
-
         entity = this.GetParent<CharacterBody2D>();
         GetStates();
 
-        conditionsCheck.Initialize(entity, this);
+        statesResources = StatesResources;
+
+        startState.Enter(entity, statesResources);
+        CurrentState = startState;
 
         var StringVal_CurrentState = CurrentState.GetType().ToString();
         EnumVal_CurrentState = (MoveStateFactory.MoveStates)Enum.Parse(typeof(MoveStateFactory.MoveStates), StringVal_CurrentState);
+
+        conditionsCheck.Initialize(entity, this);
     }
 
 
