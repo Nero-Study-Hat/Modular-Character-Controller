@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Normal_BMoveState : Base_MoveState
+partial class BNormal_MoveState : Base_MoveState
 {
     IMoveVelocity moveVelocity;
     IGetDirection getDirection;
@@ -27,7 +27,7 @@ public partial class Normal_BMoveState : Base_MoveState
         }
     }
 
-    // Assign data from resource file(s) here.
+
     public override void Enter(CharacterBody2D entity)
     {
         moveVelocity.Initialize_MoveSpeedData(normal_MoveStateData.MoveSpeedBase, normal_MoveStateData.MoveSpeedAcceleration, normal_MoveStateData.MoveSpeedFriction);

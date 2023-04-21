@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Idle_BMoveState : Base_MoveState
+public partial class BIdle_MoveState : Base_MoveState
 {
     // [Node]
     // private VelocityComponent velocityComponent;
@@ -10,6 +10,7 @@ public partial class Idle_BMoveState : Base_MoveState
     // {
     //     this.WireNodes();
     // }
+
 
     public override void Enter(CharacterBody2D entity) {}
 
