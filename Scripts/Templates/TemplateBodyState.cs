@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class TemplateMoveState:Base_MoveState
+public partial class TemplateBodyState:BaseBodyState
 {
     [Export]
     private BaseMoveData baseMoveData;

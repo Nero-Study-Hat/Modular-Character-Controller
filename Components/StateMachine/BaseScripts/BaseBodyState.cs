@@ -2,7 +2,7 @@ using Godot;
 
 // This only works for CharacterBody2D and a separate state machine is neccasary for other bodies.
 
-public abstract partial class Base_MoveState : Node
+public abstract partial class BaseBodyState : Node
 {
     public abstract void Enter(CharacterBody2D entity, BaseMoveData[] stateData);
 

@@ -5,7 +5,7 @@ public partial class Player : CharacterBody2D
 {
 
 	[Export]
-	private Movement_StateMachine moveStatesManager = new Movement_StateMachine();
+	private BodyStateMachine moveStatesManager = new BodyStateMachine();
 
     [ExportGroup("Resource Files")]
     [Export]
