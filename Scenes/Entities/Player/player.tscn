@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://Scripts/Entities/Player/Player.cs" id="1_uhu85"]
 [ext_resource type="Resource" uid="uid://bn6blwoymkxei" path="res://Data/Entity/Player/MoveStates_Data/BNormal/generic_v1.tres" id="2_25umj"]
-[ext_resource type="PackedScene" path="res://Components/StateMachine/BodyStateMachine.tscn" id="2_xmewg"]
-[ext_resource type="PackedScene" uid="uid://croppr1elpb5p" path="res://Components/StateMachine/MoveStates_Scenes/BIdle_MoveState.tscn" id="3_1nprw"]
+[ext_resource type="PackedScene" path="res://Components/StateMachine/Body/BodyStateMachine.tscn" id="2_xmewg"]
+[ext_resource type="PackedScene" path="res://Scenes/Entities/Player/CustomStates/Body/BIdle_MoveState.tscn" id="3_1nprw"]
 [ext_resource type="Script" path="res://Scripts/Entities/Player/Player_BodyManager.cs" id="5_ltbuk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oysjy"]
@@ -14,6 +14,12 @@ script = ExtResource("1_uhu85")
 moveStatesManager = NodePath("Movement_StateMachine")
 bNormalData = ExtResource("2_25umj")
 metadata/_edit_group_ = true
+
+[node name="Resource Preloaders Body States" type="Node" parent="."]
+
+[node name="CustomBodyStates" type="ResourcePreloader" parent="Resource Preloaders Body States"]
+
+[node name="GeneralBodyStates" type="ResourcePreloader" parent="Resource Preloaders Body States"]
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 40.0

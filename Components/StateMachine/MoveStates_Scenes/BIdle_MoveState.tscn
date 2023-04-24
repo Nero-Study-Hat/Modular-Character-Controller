@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://croppr1elpb5p"]
-
-[ext_resource type="Script" path="res://Components/StateMachine/MoveStates_Scripts/BIdle_MoveState.cs" id="1_w1e2k"]
-
-[node name="BIdle_MoveState" type="Node"]
-script = ExtResource("1_w1e2k")

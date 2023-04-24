@@ -5,46 +5,71 @@ using System.Collections.Generic;
 public partial class Player_BodyManager : BaseBodyStateManager
 {
     CharacterBody2D player = new CharacterBody2D();
-    BodyStateMachine body_StateMachine = new BodyStateMachine();
+    BodyStateMachine bodyStateMachine = new BodyStateMachine();
 
-    BodyStateFactory bodyStateFactory;
+    private enum states
+    {
+        BIdle,
+        BNormal
+    }
 
-    BodyStateFactory.AllBodyStates enumVal_CurrentState;
-    Dictionary<BodyStateFactory.AllBodyStates, BaseBodyState> entityStateDict = new Dictionary<BodyStateFactory.AllBodyStates, BaseBodyState>();
-    Dictionary<BodyStateFactory.AllBodyStates, Action> currentConditionsDict = new Dictionary<BodyStateFactory.AllBodyStates, Action>();
+    Dictionary<states, BaseBodyState> stateNodesDict = new Dictionary<states, BaseBodyState>();
 
+    Dictionary<states, Action> currentConditionsDict = new Dictionary<states, Action>();
+    Dictionary<states, Action> allConditionsDict = new Dictionary<states, Action>();
 
-    Dictionary<BodyStateFactory.AllBodyStates, Action> allConditionsDict = new Dictionary<BodyStateFactory.AllBodyStates, Action>();
+    private delegate bool conditionCheck();
+    Dictionary<states, conditionCheck> enterConditionsDict = new Dictionary<states, conditionCheck>()
+    {
+        {states.BNormal, () => Input.IsActionJustPressed("switchNormal")}
+    };
+    Dictionary<states, conditionCheck> spawnConditionsDict = new Dictionary<states, conditionCheck>()
+    {
+        {states.BNormal, () => Input.IsActionJustPressed("spawnNormal")}
+    };
 
     // Try testing spawning here with the area2d and a signal.
 
     private void SetAllStateChecks()
     {
-        allConditionsDict.Add(BodyStateFactory.AllBodyStates.BIdle_MoveState, BIdle_CheckConditions);
-        allConditionsDict.Add(BodyStateFactory.AllBodyStates.BNormal_MoveState, BNormal_CheckConditions);
+        allConditionsDict.Add(states.BIdle, BIdle_CheckConditions);
+        allConditionsDict.Add(states.BNormal, BNormal_CheckConditions);
     }
 
     private void SetInitialStateChecks()
     {
-        currentConditionsDict.Add(BodyStateFactory.AllBodyStates.BIdle_MoveState, BIdle_CheckConditions);
-        // currentConditionsDict.Add(MoveStateFactory.MoveStates.BNormal_MoveState, BNormal_CheckConditions);
+        currentConditionsDict.Add(states.BIdle, BIdle_CheckConditions);
+        // currentConditionsDict.Add(states.BNormal, BNormal_CheckConditions);
     }
 
-    public override void Initialize(CharacterBody2D EntityRef, BodyStateMachine bodyStateMachine)
+    public override void Initialize(CharacterBody2D EntityRef, BodyStateMachine BodyStateMachine)
     {
         player = EntityRef;
-        body_StateMachine = bodyStateMachine;
-
-        bodyStateFactory = new BodyStateFactory(body_StateMachine);
+        bodyStateMachine = BodyStateMachine;
         
-        entityStateDict = body_StateMachine.entityBodyStatesDict;
+        GetStatesNodes();
+
         SetAllStateChecks();
         SetInitialStateChecks();
     }
 
+    private void GetStatesNodes()
+    {
+        int numStates = bodyStateMachine.GetChildCount();
+
+        for (int state = 0; state < numStates; state++)
+        {
+            var stateNode = bodyStateMachine.GetChild<BaseBodyState>(state);
+            var stateName = stateNode.GetType().ToString();
+            states stateEnumVal = (states)Enum.Parse(typeof(states), stateName);
+            stateNodesDict.Add(stateEnumVal, stateNode);
+        }
+    }
+
+
     public override void ConditionsChecker()
     {
-        currentConditionsDict[body_StateMachine.EnumVal_CurrentState].Invoke();
+        // currentConditionsDict[body_StateMachine.EnumVal_CurrentState].Invoke();
     }
 
 // --
@@ -65,10 +90,9 @@ public partial class Player_BodyManager : BaseBodyStateManager
 
     private void BIdle_CheckSwitch()
     {
-        if (entityStateDict.ContainsKey(BodyStateFactory.AllBodyStates.BNormal_MoveState) == true) // Check BNormal Switch
+        if (stateNodesDict.ContainsKey(states.BNormal) == true) // Check BNormal Switch
         {
-            var _BNormal_EnterCheck = BNormal_EnterCheck();
-            if (_BNormal_EnterCheck == true)
+            if (enterConditionsDict[states.BNormal] == true)
             {
                 body_StateMachine.ChangeState(entityStateDict[BodyStateFactory.AllBodyStates.BNormal_MoveState]);
                 return;
@@ -106,7 +130,7 @@ public partial class Player_BodyManager : BaseBodyStateManager
 
     private void BNormal_CheckSpawn()
     {
-        if (entityStateDict.ContainsKey(BodyStateFactory.AllBodyStates.BIdle_MoveState) == false) // Check BIdle Spawn
+        if (entityStateDict.ContainsKey(states.BIdle) == false) // Check BIdle Spawn
         {
             var statusBIdle = BIdle_SpawnNewCheck();
             if (statusBIdle == true)
@@ -115,46 +139,5 @@ public partial class Player_BodyManager : BaseBodyStateManager
                 return;
             }
         }
-    }
-
-// --
-
-
-    private bool BIdle_EnterCheck()
-    {
-        if (Input.IsActionJustPressed("switchIdle"))
-        {
-            return true;
-        }
-        return false;
-    }
-
-    private bool BIdle_SpawnNewCheck()
-    {
-        if (Input.IsActionJustPressed("spawnIdle"))
-        {
-            return true;
-        }
-        return false;
-    }
-
-// --
-
-    private bool BNormal_EnterCheck()
-    {
-        if (Input.IsActionJustPressed("switchNormal"))
-        {
-            return true;
-        }
-        return false;
-    }
-
-    private bool BNormal_SpawnNewCheck()
-    {
-        if (Input.IsActionJustPressed("spawnNormal"))
-        {
-            return true;
-        }
-        return false;
     }
 }
