@@ -1,7 +1,7 @@
 using Godot;
-using System;
+using System.Diagnostics;
 
-partial class BNormal_MoveState : Base_MoveState
+partial class BNormal_BodyState : BaseBodyState
 {
     IMoveVelocity moveVelocity;
     IGetDirection getDirection;
