@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class BIdle_MoveState : BaseBodyState
+public partial class BIdle_BodyState : BaseBodyState
 {
     public override void Enter(CharacterBody2D entity, BaseMoveData[] stateData) {}
 

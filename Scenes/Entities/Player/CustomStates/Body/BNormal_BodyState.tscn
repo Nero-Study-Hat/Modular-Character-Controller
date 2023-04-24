@@ -1,11 +1,11 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://h18a1s5d4ygf"]
 
-[ext_resource type="Script" path="res://Components/StateMachine/Body/MoveStates_Scripts/BNormal_MoveState.cs" id="1_x62wu"]
+[ext_resource type="Script" path="res://Scripts/Entities/Player/BodyStates_Scripts/BNormal_BodyState.cs" id="1_skfn4"]
 [ext_resource type="PackedScene" path="res://Components/Movement/VelocityComponent.tscn" id="2_iicgh"]
 [ext_resource type="PackedScene" uid="uid://bwl5a2ndhny5a" path="res://Components/Movement/PlayerMove_KeyComponent.tscn" id="3_v3c1h"]
 
-[node name="BNormal_MoveState" type="Node"]
-script = ExtResource("1_x62wu")
+[node name="BNormal_BodyState" type="Node"]
+script = ExtResource("1_skfn4")
 
 [node name="VelocityComponent" parent="." instance=ExtResource("2_iicgh")]
 
