@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class BodyStateFactory
 {
     BodyStateMachine stateMachine;
-    Dictionary<AllBodyStates, BaseBodyState> entityStatesDict;
 
     Dictionary<BodyStateTypes, string> stateTypesDict;
     string generalStatesDirPath = "res://Components/StateMachine/MoveStates_Scenes/General/";
@@ -15,8 +14,6 @@ public class BodyStateFactory
     public BodyStateFactory(BodyStateMachine BodyStateMachine)
     {
         stateMachine = BodyStateMachine;
-        entityStatesDict = stateMachine.entityBodyStatesDict;
-
         stateTypesDict = new Dictionary<BodyStateTypes, string>
         {
             {BodyStateTypes.Player, "PlayerStates/"},
