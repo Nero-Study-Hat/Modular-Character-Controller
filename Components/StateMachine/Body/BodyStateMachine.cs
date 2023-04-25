@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using System.Collections.Generic;
 
 // This only works for CharacterBody2D and a separate state machine is neccasary for other bodies.
 
