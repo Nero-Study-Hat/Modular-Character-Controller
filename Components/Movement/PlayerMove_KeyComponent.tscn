@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bwl5a2ndhny5a"]
-
-[ext_resource type="Script" path="res://Components/Movement/PlayerMove_KeysComponent.cs" id="1_h66sw"]
-
-[node name="PlayerMove_KeysComponent" type="Node"]
-script = ExtResource("1_h66sw")
