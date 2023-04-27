@@ -17,7 +17,7 @@ ResourceScriptDirectories=[&"res://Scripts/Resources/"]
 [application]
 
 config/name="Modular Character Controller"
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="res://Scenes/main.tscn"
 config/features=PackedStringArray("4.0", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 

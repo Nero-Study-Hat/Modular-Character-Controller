@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dtle585x2ku30"]
+[gd_scene load_steps=8 format=3 uid="uid://2buyqgccy3kw"]
 
-[ext_resource type="Script" path="res://scripts/entities/player/Player.cs" id="1_uhu85"]
-[ext_resource type="PackedScene" path="res://scenes/components/BodyStateMachine.tscn" id="2_xmewg"]
-[ext_resource type="PackedScene" uid="uid://pwy0okaoqhdu" path="res://scenes/entities/player/custom_states/body/BIdle_BodyState.tscn" id="3_qox5b"]
-[ext_resource type="PackedScene" uid="uid://dtb2yu7vu1eum" path="res://scenes/entities/player/custom_states/body/BNormal_BodyState.tscn" id="4_vemu6"]
-[ext_resource type="Script" path="res://scripts/entities/player/Player_BodyManager.cs" id="5_ltbuk"]
+[ext_resource type="Script" path="res://Scripts/Entities/Player/Player.cs" id="1_uhu85"]
+[ext_resource type="Resource" uid="uid://bn6blwoymkxei" path="res://Data/Entity/Player/MoveStates_Data/BNormal/generic_v1.tres" id="2_vh1nb"]
+[ext_resource type="PackedScene" path="res://Components/StateMachine/Body/BodyStateMachine.tscn" id="2_xmewg"]
+[ext_resource type="PackedScene" uid="uid://c8gvkvxuj2bq4" path="res://Scenes/Entities/Player/CustomStates/Body/BIdle_BodyState.tscn" id="3_qox5b"]
+[ext_resource type="PackedScene" uid="uid://h18a1s5d4ygf" path="res://Scenes/Entities/Player/CustomStates/Body/BNormal_BodyState.tscn" id="4_vemu6"]
+[ext_resource type="Script" path="res://Scripts/Entities/Player/Player_BodyManager.cs" id="5_ltbuk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oysjy"]
 size = Vector2(40, 40)
@@ -12,6 +13,7 @@ size = Vector2(40, 40)
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("moveStatesManager")]
 script = ExtResource("1_uhu85")
 moveStatesManager = NodePath("Movement_StateMachine")
+bNormalData = ExtResource("2_vh1nb")
 metadata/_edit_group_ = true
 
 [node name="Resource Preloaders Body States" type="Node" parent="."]
@@ -35,5 +37,7 @@ conditionsCheck = NodePath("../PlayerBodyManager")
 
 [node name="BNormal_BodyState" parent="Movement_StateMachine" instance=ExtResource("4_vemu6")]
 
-[node name="PlayerBodyManager" type="Node" parent="."]
+[node name="PlayerBodyManager" type="Node" parent="." node_paths=PackedStringArray("customResPreloader", "generalResPreloader")]
 script = ExtResource("5_ltbuk")
+customResPreloader = NodePath("../Resource Preloaders Body States/CustomBodyStates")
+generalResPreloader = NodePath("../Resource Preloaders Body States/GeneralBodyStates")

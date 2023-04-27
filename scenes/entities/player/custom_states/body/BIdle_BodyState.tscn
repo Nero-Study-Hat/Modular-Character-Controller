@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://pwy0okaoqhdu"]
-
-[ext_resource type="Script" path="res://scripts/entities/player/body_stateScripts/BIdle_BodyState.cs" id="1_orugq"]
-
-[node name="BIdle_BodyState" type="Node"]
-script = ExtResource("1_orugq")
