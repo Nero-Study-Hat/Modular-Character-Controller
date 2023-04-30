@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" path="res://Archive/MovementComponents/VelocityComponent.tscn" id="2_emg0u"]
 [ext_resource type="PackedScene" uid="uid://bwl5a2ndhny5a" path="res://Archive/MovementComponents/PlayerMove_KeyComponent.tscn" id="3_v3c1h"]
 
-[node name="BNormal_BodyState" type="Node"]
+[node name="BNormal_BodyState" type="Node" groups=["BodyStates"]]
 script = ExtResource("1_gyfy0")
 
 [node name="VelocityComponent" parent="." instance=ExtResource("2_emg0u")]

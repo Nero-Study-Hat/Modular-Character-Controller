@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Entities/Player/Player.cs" id="1_uhu85"]
 [ext_resource type="Resource" uid="uid://cn2xlkdcpmrs" path="res://Data/Entity/Player/CustomStates/Body/BNormal/basic_v1.tres" id="2_7rv1g"]
-[ext_resource type="PackedScene" path="res://Scenes/Components/StateMachines/Body/BodyStateMachine.tscn" id="2_xmewg"]
+[ext_resource type="PackedScene" uid="uid://dy0th3tht5pso" path="res://Scenes/Components/StateMachines/Body/BodyStateMachine.tscn" id="2_xmewg"]
 [ext_resource type="PackedScene" uid="uid://c8gvkvxuj2bq4" path="res://Scenes/Entities/Player/CustomStates/Body/BIdle_BodyState.tscn" id="3_qox5b"]
 [ext_resource type="PackedScene" uid="uid://h18a1s5d4ygf" path="res://Scenes/Entities/Player/CustomStates/Body/BNormal_BodyState.tscn" id="4_vemu6"]
 [ext_resource type="Script" path="res://Scripts/Entities/Player/Managers/Player_BodyManager.cs" id="5_ltbuk"]
@@ -31,13 +31,13 @@ offset_bottom = 40.0
 position = Vector2(20, 20)
 shape = SubResource("RectangleShape2D_oysjy")
 
-[node name="Movement_StateMachine" parent="." node_paths=PackedStringArray("startState", "conditionsCheck") instance=ExtResource("2_xmewg")]
-startState = NodePath("BNormal_BodyState")
-conditionsCheck = NodePath("../PlayerBodyManager")
+[node name="Movement_StateMachine" parent="." node_paths=PackedStringArray("_startState", "_conditionsCheck") instance=ExtResource("2_xmewg")]
+_startState = NodePath("")
+_conditionsCheck = NodePath("../PlayerBodyManager")
 
 [node name="BNormal_BodyState" parent="Movement_StateMachine" instance=ExtResource("4_vemu6")]
 
-[node name="PlayerBodyManager" type="Node" parent="." node_paths=PackedStringArray("customResPreloader", "generalResPreloader")]
+[node name="PlayerBodyManager" type="Node" parent="." node_paths=PackedStringArray("_customResPreloader", "_generalResPreloader")]
 script = ExtResource("5_ltbuk")
-customResPreloader = NodePath("../Resource Preloaders Body States/CustomBodyStates")
-generalResPreloader = NodePath("../Resource Preloaders Body States/GeneralBodyStates")
+_customResPreloader = NodePath("../Resource Preloaders Body States/CustomBodyStates")
+_generalResPreloader = NodePath("../Resource Preloaders Body States/GeneralBodyStates")

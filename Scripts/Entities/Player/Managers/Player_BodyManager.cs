@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+// [Tool]
 public partial class Player_BodyManager : BaseBodyStateManager
 {
     [Export]
@@ -149,4 +150,19 @@ public partial class Player_BodyManager : BaseBodyStateManager
             }
         }
     }
+
+    // public override string[] _GetConfigurationWarnings()
+    // {
+    //     string[] editorWarnings = new string[2];
+
+    //     if (_customResPreloader == null)
+    //     {
+    //         editorWarnings[0] = "Custom resPreloader node not assigned.";        }
+    //     if (_generalResPreloader == null)
+    //     {
+    //         editorWarnings[1] = "General resPreloader node not assigned.";
+    //     }
+    //     this.UpdateConfigurationWarnings();
+    //     return editorWarnings;
+    // }
 }

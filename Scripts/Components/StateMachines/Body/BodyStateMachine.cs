@@ -2,10 +2,11 @@ using Godot;
 
 // This only works for CharacterBody2D and a separate state machine is neccasary for other bodies.
 
+[Tool]
 public partial class BodyStateMachine : Node
 {
     [Export]
-    BaseBodyState _startState;
+    private BaseBodyState _startState;
 
     private CharacterBody2D _entity;
     private BaseMoveData[] _statesResources;
@@ -55,5 +56,36 @@ public partial class BodyStateMachine : Node
     public void PhysicsProcess()
     {
         CurrentState.PhysicsProcess(_entity);
+    }
+
+    // Checks if there are child nodes and if any child node is not in BodyState group.
+    public override string[] _GetConfigurationWarnings()
+    {
+        string[] empty = new string[0];
+        string[] warnings = new string[1];
+
+        if (GetChildCount() == 0)
+        {
+            warnings[0] = "Assigns state nodes.";
+            return warnings;
+        }
+
+        foreach (Node node in GetChildren())
+        {
+            if (node.IsInGroup("BodyStates") == false)
+            {
+                warnings[0] = "Child node is not body state.";
+                return warnings;
+            }
+        }
+
+        // if (_startState != null)
+        // {
+        //     // warnings[0] = "Start state is not set in inspector.";
+        //     warnings[0] = "Start State is " + _startState.ToString();
+        //     return warnings;
+        // }
+
+        return empty;
     }
 }
