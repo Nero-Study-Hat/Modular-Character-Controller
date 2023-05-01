@@ -6,7 +6,7 @@ using Godot;
 public partial class BodyStateMachine : Node
 {
     [Export]
-    private BaseBodyState _startState;
+    BaseBodyState _startState;
 
     private CharacterBody2D _entity;
     private BaseMoveData[] _statesResources;
@@ -78,13 +78,6 @@ public partial class BodyStateMachine : Node
                 return warnings;
             }
         }
-
-        // if (_startState != null)
-        // {
-        //     // warnings[0] = "Start state is not set in inspector.";
-        //     warnings[0] = "Start State is " + _startState.ToString();
-        //     return warnings;
-        // }
 
         return empty;
     }

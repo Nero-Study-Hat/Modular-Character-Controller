@@ -32,7 +32,8 @@ position = Vector2(20, 20)
 shape = SubResource("RectangleShape2D_oysjy")
 
 [node name="Movement_StateMachine" parent="." node_paths=PackedStringArray("_startState", "_conditionsCheck") instance=ExtResource("2_xmewg")]
-_startState = NodePath("")
+_startState = NodePath("BNormal_BodyState")
+_col = Color(0.733333, 0.584314, 0.313726, 1)
 _conditionsCheck = NodePath("../PlayerBodyManager")
 
 [node name="BNormal_BodyState" parent="Movement_StateMachine" instance=ExtResource("4_vemu6")]
