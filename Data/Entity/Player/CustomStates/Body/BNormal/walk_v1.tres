@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dvtt1mthhbabt"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/BodyData/BNormal_Data.cs" id="1_nj1c6"]
+
+[resource]
+script = ExtResource("1_nj1c6")
+MoveSpeedBase = 300.0
+MoveSpeedAcceleration = 6.0
+MoveSpeedFriction = 10.0

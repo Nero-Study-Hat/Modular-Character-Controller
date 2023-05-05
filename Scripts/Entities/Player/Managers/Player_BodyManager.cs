@@ -2,15 +2,19 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-// [Tool]
 public partial class Player_BodyManager : BaseBodyStateManager
 {
     [Export]
     ResourcePreloader _customResPreloader;
     [Export]
     ResourcePreloader _generalResPreloader;
+
     CharacterBody2D _player = new CharacterBody2D();
     BodyStateMachine _bodyStateMachine = new BodyStateMachine();
+
+    [ExportGroup("Body Data")]
+    [Export]
+    private BaseBodyData[] bNormalData;
 
     public enum states // names must be same as class names
     {
@@ -105,8 +109,9 @@ public partial class Player_BodyManager : BaseBodyStateManager
     {
         if (_stateNodesDict.ContainsKey(states.BNormal_BodyState) == true) // Check BNormal Switch
         {
-            if (_enterConditions[states.BNormal_BodyState].Invoke() == true)
+            if (_enterConditions[states.BNormal_BodyState].Invoke() == true) // Check BNormal sub state 0.
             {
+                _stateNodesDict[states.BNormal_BodyState].SetResource(bNormalData[0]);
                 SetCurrentState(states.BNormal_BodyState);
                 return;
             }
@@ -150,19 +155,4 @@ public partial class Player_BodyManager : BaseBodyStateManager
             }
         }
     }
-
-    // public override string[] _GetConfigurationWarnings()
-    // {
-    //     string[] editorWarnings = new string[2];
-
-    //     if (_customResPreloader == null)
-    //     {
-    //         editorWarnings[0] = "Custom resPreloader node not assigned.";        }
-    //     if (_generalResPreloader == null)
-    //     {
-    //         editorWarnings[1] = "General resPreloader node not assigned.";
-    //     }
-    //     this.UpdateConfigurationWarnings();
-    //     return editorWarnings;
-    // }
 }

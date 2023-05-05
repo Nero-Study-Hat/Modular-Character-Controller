@@ -4,7 +4,9 @@ using Godot;
 
 public abstract partial class BaseBodyState : Node
 {
-    public abstract void Enter(CharacterBody2D entity, BaseMoveData[] stateData);
+    public abstract void Enter(CharacterBody2D entity);
+
+    public virtual void SetResource(BaseBodyData stateData) {}
 
     public abstract void Exit(CharacterBody2D entity);
 

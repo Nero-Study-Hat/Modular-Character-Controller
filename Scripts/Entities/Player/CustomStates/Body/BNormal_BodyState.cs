@@ -3,6 +3,8 @@ using System.Diagnostics;
 
 partial class BNormal_BodyState : BaseBodyState
 {
+    private BNormal_Data _data;
+
     IMoveVelocity moveVelocity;
     IGetDirection getDirection;
 
@@ -24,17 +26,21 @@ partial class BNormal_BodyState : BaseBodyState
         }
     }
 
-
-    public override void Enter(CharacterBody2D entity, BaseMoveData[] stateData)
+    public override void SetResource(BaseBodyData stateData)
     {
-        foreach (BaseMoveData dataRes in stateData)
+        if(stateData is BNormal_Data bNormal_Data)
         {
-            if (dataRes is BNormal_Data bNormal_Data)
-            {
-                moveVelocity.Initialize_MoveSpeedData(bNormal_Data.MoveSpeedBase, bNormal_Data.MoveSpeedAcceleration, bNormal_Data.MoveSpeedFriction);
-            }
+            _data = bNormal_Data;
+            var moveData = new BodyStateData.MoveData();
+
+            moveData.MoveSpeedBase = _data.MoveSpeedBase;
+            moveData.MoveSpeedAcceleration = _data.MoveSpeedAcceleration;
+            moveData.MoveSpeedFriction = _data.MoveSpeedFriction;
+            moveVelocity.Initialize_MoveSpeedData(moveData);
         }
     }
+
+    public override void Enter(CharacterBody2D entity) {}
 
 
     public override void Process(CharacterBody2D entity) {}

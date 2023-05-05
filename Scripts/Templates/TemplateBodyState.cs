@@ -3,9 +3,9 @@ using Godot;
 public partial class TemplateBodyState:BaseBodyState
 {
     [Export]
-    private BaseMoveData baseMoveData;
+    private BaseBodyData baseMoveData;
 
-    public override void Enter(CharacterBody2D entity, BaseMoveData[] stateData) {}
+    public override void Enter(CharacterBody2D entity) {}
 
     public override void Exit(CharacterBody2D entity) {}
 

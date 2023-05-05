@@ -3,7 +3,7 @@ using System;
 
 public partial class BIdle_BodyState : BaseBodyState
 {
-    public override void Enter(CharacterBody2D entity, BaseMoveData[] stateData) {}
+    public override void Enter(CharacterBody2D entity) {}
 
     public override void Exit(CharacterBody2D entity) {}
 

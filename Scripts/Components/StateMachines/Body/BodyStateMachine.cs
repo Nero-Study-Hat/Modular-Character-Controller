@@ -6,15 +6,18 @@ using Godot;
 public partial class BodyStateMachine : Node
 {
     [Export]
-    BaseBodyState _startState;
-
-    private CharacterBody2D _entity;
-    private BaseMoveData[] _statesResources;
+    BaseBodyState? _startState;
 
     [Export]
-    BaseBodyStateManager _conditionsCheck;
+    private Resource _startData;
 
-    public BaseBodyState CurrentState {get; private set;}
+    private CharacterBody2D? _entity;
+
+    [Export]
+    BaseBodyStateManager? _stateManager;
+
+
+    public BaseBodyState? CurrentState {get; private set;}
 
     public BodyStateMachine GetBody_StateMachine()
     {
@@ -27,29 +30,31 @@ public partial class BodyStateMachine : Node
     public void ChangeState(BaseBodyState newState)
     {
         CurrentState.Exit(_entity);
-        newState.Enter(_entity, _statesResources);
+        newState.Enter(_entity);
 
         CurrentState = newState;
         EmitSignal(SignalName.MoveState_Changed, newState);
     }
 
 
-    public void Init(BaseMoveData[] StatesResources)
+    public void Init()
     {
         _entity = this.GetParent<CharacterBody2D>();
 
-        _statesResources = StatesResources;
-
-        _startState.Enter(_entity, _statesResources);
+        if(_startData != null && _startData is BaseBodyData data)
+        {
+            _startState.SetResource(data);
+        }
+        _startState.Enter(_entity);
         CurrentState = _startState;
 
-        _conditionsCheck.Initialize(_entity, this);
+        _stateManager.Initialize(_entity, this);
     }
 
 
     public void Process()
     {
-        _conditionsCheck.ConditionsChecker();
+        _stateManager.ConditionsChecker();
         CurrentState.Process(_entity);
     }
 
