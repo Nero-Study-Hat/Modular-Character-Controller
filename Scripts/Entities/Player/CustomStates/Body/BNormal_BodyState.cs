@@ -14,20 +14,9 @@ partial class BNormal_BodyState : BaseBodyState
     // Connect up component nodes.
     public override void _Ready()
     {
-        for (int index = 0; index < this.GetChildCount(); index++)
-        {
-            if (this.GetChild(index) is IMoveVelocity)
-            {
-                moveVelocity = this.GetChild<IMoveVelocity>(index);
-            }
-            if (this.GetChild(index) is IGetDirection)
-            {
-                getDirection = this.GetChild<IGetDirection>(index);
-            }
-        }
-
-        // TODO test this lamba w/ linq
-        moveVelocity = (IMoveVelocity)this.GetChildren().Where(node => node is IMoveVelocity);
+        // TODO write check for child node
+        moveVelocity = (IMoveVelocity)this.GetChildren().First(node => node is IMoveVelocity);
+        getDirection = (IGetDirection)this.GetChildren().First(node => node is IGetDirection);
     }
 
     public override void SetResource(BaseBodyData stateData)
