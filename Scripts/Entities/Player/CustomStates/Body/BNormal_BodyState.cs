@@ -1,4 +1,5 @@
 using Godot;
+using System.Linq;
 using System.Diagnostics;
 
 partial class BNormal_BodyState : BaseBodyState
@@ -24,6 +25,9 @@ partial class BNormal_BodyState : BaseBodyState
                 getDirection = this.GetChild<IGetDirection>(index);
             }
         }
+
+        // TODO test this lamba w/ linq
+        moveVelocity = (IMoveVelocity)this.GetChildren().Where(node => node is IMoveVelocity);
     }
 
     public override void SetResource(BaseBodyData stateData)
