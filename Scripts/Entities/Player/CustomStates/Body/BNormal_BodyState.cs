@@ -30,11 +30,11 @@ partial class BNormal_BodyState : BaseState
         getDirection = (IGetDirection)directionNodeDependency[0];
     }
 
-    public override void SetResource<T>(T resource)
+    public override void SetResource<BNormal_Data>(BNormal_Data resource)
     {
-        if(resource is BNormal_Data bNormal_Data)
+        if(resource is BNormal_Data)
         {
-            _data = bNormal_Data;
+            _data = resource; // FIXME Can't convert BNormal_Data to BNormal_Data. HELP !!!
             var moveData = new BodyStateData.MoveData();
 
             moveData.MoveSpeedBase = _data.MoveSpeedBase;
