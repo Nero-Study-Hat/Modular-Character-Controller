@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dy0th3tht5pso"]
-
-[ext_resource type="Script" path="res://Scripts/Components/StateMachines/Body/BodyStateMachine.cs" id="1_e0rhc"]
-
-[node name="Movement_StateMachine" type="Node"]
-script = ExtResource("1_e0rhc")

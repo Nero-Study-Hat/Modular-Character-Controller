@@ -3,10 +3,10 @@ using Godot;
 // This only works for CharacterBody2D and a separate state machine is neccasary for other bodies.
 
 [Tool]
-public partial class BodyStateMachine : Node
+public partial class StateMachine : Node
 {
     [Export]
-    BaseBodyState? _startState;
+    BaseState? _startState;
 
     [Export]
     private Resource _startData;
@@ -14,26 +14,26 @@ public partial class BodyStateMachine : Node
     private CharacterBody2D? _entity;
 
     [Export]
-    BaseBodyStateManager? _stateManager;
+    BaseStateManager? _stateManager;
 
 
-    public BaseBodyState? CurrentState {get; private set;}
+    public BaseState? CurrentState {get; private set;}
 
-    public BodyStateMachine GetBody_StateMachine()
+    public StateMachine GetStateMachine()
     {
         return this;
     }
 
-    [Signal]
-    public delegate void MoveState_ChangedEventHandler(BaseBodyState MoveState);
+    // [Signal]
+    // public delegate void MoveState_ChangedEventHandler(BaseState MoveState);
 
-    public void ChangeState(BaseBodyState newState)
+    public void ChangeState(BaseState newState)
     {
-        CurrentState.Exit(_entity);
-        newState.Enter(_entity);
+        CurrentState.Exit();
+        newState.Enter();
 
         CurrentState = newState;
-        EmitSignal(SignalName.MoveState_Changed, newState);
+        // EmitSignal(SignalName.MoveState_Changed, newState);
     }
 
 
@@ -45,22 +45,22 @@ public partial class BodyStateMachine : Node
         {
             _startState.SetResource(data);
         }
-        _startState.Enter(_entity);
+        _startState.Enter();
         CurrentState = _startState;
 
-        _stateManager.Initialize(_entity, this);
+        _stateManager.Initialize(this);
     }
 
 
     public void Process()
     {
         _stateManager.ConditionsChecker();
-        CurrentState.Process(_entity);
+        CurrentState.Process();
     }
 
     public void PhysicsProcess()
     {
-        CurrentState.PhysicsProcess(_entity);
+        CurrentState.PhysicsProcess();
     }
 
     // Checks if there are child nodes and if any child node is not in BodyState group.

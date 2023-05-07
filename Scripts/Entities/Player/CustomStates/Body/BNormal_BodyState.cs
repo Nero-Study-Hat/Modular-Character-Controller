@@ -2,8 +2,9 @@ using Godot;
 using System.Linq;
 using System.Diagnostics;
 
-partial class BNormal_BodyState : BaseBodyState
+partial class BNormal_BodyState : BaseState
 {
+    CharacterBody2D _entity = new CharacterBody2D();
     private BNormal_Data _data;
 
     IMoveVelocity moveVelocity;
@@ -14,6 +15,7 @@ partial class BNormal_BodyState : BaseBodyState
     // Connect up component nodes.
     public override void _Ready()
     {
+        _entity = this.GetOwner<CharacterBody2D>();
         var velocityNodeDependency = this.GetChildren().Where(node => node is IMoveVelocity).ToList();
         var directionNodeDependency = this.GetChildren().Where(node => node is IGetDirection).ToList();
         if (velocityNodeDependency.Count != 1)
@@ -42,17 +44,17 @@ partial class BNormal_BodyState : BaseBodyState
         }
     }
 
-    public override void Enter(CharacterBody2D entity) {}
+    public override void Enter() {}
 
 
-    public override void Process(CharacterBody2D entity) {}
+    public override void Process() {}
 
     // Handle direction and velocity with MoveAndSlide.
-    public override void PhysicsProcess(CharacterBody2D entity)
+    public override void PhysicsProcess()
     {
         direction = getDirection.GetDirection();
         moveVelocity.SetDirection(direction.X, direction.Y);
-        moveVelocity.SetVelocity(entity.Velocity.X, entity.Velocity.Y);
+        moveVelocity.SetVelocity(_entity.Velocity.X, _entity.Velocity.Y);
 
         if (direction != Vector2.Zero)
         {
@@ -63,9 +65,9 @@ partial class BNormal_BodyState : BaseBodyState
             moveVelocity.Friction();
         }
 
-        entity.Velocity = moveVelocity.GetVelocity();
-        entity.MoveAndSlide();
+        _entity.Velocity = moveVelocity.GetVelocity();
+        _entity.MoveAndSlide();
     }
 
-    public override void Exit(CharacterBody2D entity) {}
+    public override void Exit() {}
 }

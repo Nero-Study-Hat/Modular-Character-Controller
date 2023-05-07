@@ -1,10 +1,9 @@
 using Godot;
-using System;
 
 public partial class Player : CharacterBody2D
 {
 	[Export]
-	private BodyStateMachine _bodyStateMachine = new BodyStateMachine();
+	private StateMachine _stateMachine = new StateMachine();
 
 // in the future maybe setup a log for who is accessing this if needed
 	public Player GetPlayerRef()
@@ -14,16 +13,16 @@ public partial class Player : CharacterBody2D
 
     public override void _Ready()
     {
-        _bodyStateMachine.Init();
+        _stateMachine.Init();
     }
 
 	public override void _Process(double delta)
     {
-        _bodyStateMachine.Process();
+        _stateMachine.Process();
     }
 	
     public override void _PhysicsProcess(double delta)
     {
-        _bodyStateMachine.PhysicsProcess();
+        _stateMachine.PhysicsProcess();
     }
 }

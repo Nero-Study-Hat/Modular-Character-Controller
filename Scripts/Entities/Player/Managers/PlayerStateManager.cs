@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class Player_BodyManager : BaseBodyStateManager
+public partial class PlayerStateManager : BaseStateManager
 {
     [Export]
     ResourcePreloader _customResPreloader;
@@ -10,20 +10,22 @@ public partial class Player_BodyManager : BaseBodyStateManager
     ResourcePreloader _generalResPreloader;
 
     CharacterBody2D _player = new CharacterBody2D();
-    BodyStateMachine _bodyStateMachine = new BodyStateMachine();
+    StateMachine _stateMachine = new StateMachine();
 
     [ExportGroup("Body Data")]
     [Export]
     private BaseBodyData[] bNormalData;
 
-    public enum States // names must be same as class names
+    // names must be same as class names
+    // all possible states for this entity must be here
+    public enum States
     {
         BIdle_BodyState,
         BNormal_BodyState,
     }
     public States _currentState = States.BNormal_BodyState; // Must be start state.
     
-    Dictionary<States, BaseBodyState> _stateNodesDict = new Dictionary<States, BaseBodyState>();
+    Dictionary<States, BaseState> _stateNodesDict = new Dictionary<States, BaseState>();
 
     Dictionary<States, Func<bool>> _enterConditions = new Dictionary<States, Func<bool>>();
     Dictionary<States, Func<bool>> _spawnConditions = new Dictionary<States, Func<bool>>();
@@ -40,25 +42,25 @@ public partial class Player_BodyManager : BaseBodyStateManager
     private void SetCurrentState(States state)
     {
         _currentState = state;
-        _bodyStateMachine.ChangeState(_stateNodesDict[state]);
+        _stateMachine.ChangeState(_stateNodesDict[state]);
     }
 
     private void SpawnState(States state, ResourcePreloader resourcePreloader)
     {
         var stateName = state.ToString();
         var stateScene = resourcePreloader.GetResource(stateName) as PackedScene; // this line is breaking
-        var SceneInstance = (BaseBodyState)stateScene.Instantiate();
-        _bodyStateMachine.AddChild(SceneInstance);
+        var SceneInstance = (BaseState)stateScene.Instantiate();
+        _stateMachine.AddChild(SceneInstance);
 
         _stateNodesDict.Add(state, SceneInstance);
     }
 
     // Try testing spawning here with the area2d and a signal.
 
-    public override void Initialize(CharacterBody2D EntityRef, BodyStateMachine BodyStateMachine)
+    public override void Initialize(StateMachine StateMachine)
     {
-        _player = EntityRef;
-        _bodyStateMachine = BodyStateMachine;
+        _player = this.GetOwner<CharacterBody2D>();
+        _stateMachine = StateMachine;
         
         SetConditionChecks();
         GetStatesNodes();
@@ -66,11 +68,11 @@ public partial class Player_BodyManager : BaseBodyStateManager
 
     private void GetStatesNodes()
     {
-        int numStates = _bodyStateMachine.GetChildCount();
+        int numStates = _stateMachine.GetChildCount();
 
         for (int state = 0; state < numStates; state++)
         {
-            var stateNode = _bodyStateMachine.GetChild<BaseBodyState>(state);
+            var stateNode = _stateMachine.GetChild<BaseState>(state);
             var stateName = stateNode.GetType().ToString();
             States stateEnumVal = (States)Enum.Parse(typeof(States), stateName);
             _stateNodesDict.Add(stateEnumVal, stateNode);

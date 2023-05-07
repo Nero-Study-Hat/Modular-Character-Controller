@@ -1,17 +1,14 @@
 using Godot;
 using System;
 
-public partial class BIdle_BodyState : BaseBodyState
+public partial class BIdle_BodyState : BaseState
 {
-    public override void Enter(CharacterBody2D entity) {}
+    public override void Enter() {}
 
-    public override void Exit(CharacterBody2D entity) {}
+    public override void Exit() {}
 
 
-    public override void Process(CharacterBody2D entity) {}
+    public override void Process() {}
 
-    public override void PhysicsProcess(CharacterBody2D entity)
-    {
-        //
-    }
+    public override void PhysicsProcess() {}
 }
