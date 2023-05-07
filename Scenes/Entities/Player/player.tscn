@@ -22,6 +22,8 @@ _stateManager = NodePath("../PlayerStateManager")
 
 [node name="BNormal_BodyState" parent="StateMachine" instance=ExtResource("4_vemu6")]
 
+[node name="BNormal_BodyState2" parent="StateMachine" instance=ExtResource("4_vemu6")]
+
 [node name="StatesResourcePreloaders" type="Node" parent="."]
 
 [node name="CustomBodyStates" type="ResourcePreloader" parent="StatesResourcePreloaders"]

@@ -16,8 +16,10 @@ public partial class PlayerStateManager : BaseStateManager
     [Export]
     private BNormal_Data[] bNormalData;
 
-    // names must be same as class names
-    // all possible states for this entity must be here
+    /// <summary>
+    /// <para>names must be same as class names</para>
+    /// <para>all possible states for this entity must be here</para>
+    /// </summary>
     public enum States
     {
         BIdle_BodyState,
