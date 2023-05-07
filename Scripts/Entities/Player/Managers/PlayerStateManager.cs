@@ -14,7 +14,7 @@ public partial class PlayerStateManager : BaseStateManager
 
     [ExportGroup("Body Data")]
     [Export]
-    private BaseBodyData[] bNormalData;
+    private BNormal_Data[] bNormalData;
 
     // names must be same as class names
     // all possible states for this entity must be here

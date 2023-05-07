@@ -30,9 +30,9 @@ partial class BNormal_BodyState : BaseState
         getDirection = (IGetDirection)directionNodeDependency[0];
     }
 
-    public override void SetResource(BaseBodyData stateData)
+    public override void SetResource<T>(T resource)
     {
-        if(stateData is BNormal_Data bNormal_Data)
+        if(resource is BNormal_Data bNormal_Data)
         {
             _data = bNormal_Data;
             var moveData = new BodyStateData.MoveData();
