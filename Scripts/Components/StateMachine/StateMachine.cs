@@ -43,7 +43,7 @@ public partial class StateMachine : Node
 
         if(_startData != null && _startData is BaseBodyData data)
         {
-            _startState.SetResource(data);
+            _startState.SetData(data);
         }
         _startState.Enter();
         CurrentState = _startState;

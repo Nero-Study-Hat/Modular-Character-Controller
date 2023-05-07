@@ -5,7 +5,6 @@ using System.Diagnostics;
 partial class BNormal_BodyState : BaseState
 {
     CharacterBody2D _entity = new CharacterBody2D();
-    private BNormal_Data _data;
 
     IMoveVelocity moveVelocity;
     IGetDirection getDirection;
@@ -30,26 +29,18 @@ partial class BNormal_BodyState : BaseState
         getDirection = (IGetDirection)directionNodeDependency[0];
     }
 
-    public override void SetResource<BNormal_Data>(BNormal_Data resource)
+    public override void SetData(Resource stateData)
     {
-        _data = resource; // FIXME Can't convert BNormal_Data to BNormal_Data. HELP !!!
+        if(stateData is not BNormal_Data bNormal_Data)
+        {
+            return;
+        }
+
         var moveData = new BodyStateData.MoveData();
-
-        moveData.MoveSpeedBase = _data.MoveSpeedBase;
-        moveData.MoveSpeedAcceleration = _data.MoveSpeedAcceleration;
-        moveData.MoveSpeedFriction = _data.MoveSpeedFriction;
+        moveData.MoveSpeedBase = bNormal_Data.MoveSpeedBase;
+        moveData.MoveSpeedAcceleration = bNormal_Data.MoveSpeedAcceleration;
+        moveData.MoveSpeedFriction = bNormal_Data.MoveSpeedFriction;
         moveVelocity.Initialize_MoveSpeedData(moveData);
-
-        // if(resource is BNormal_Data)
-        // {
-        //     _data = resource; // FIXME Can't convert BNormal_Data to BNormal_Data. HELP !!!
-        //     var moveData = new BodyStateData.MoveData();
-
-        //     moveData.MoveSpeedBase = _data.MoveSpeedBase;
-        //     moveData.MoveSpeedAcceleration = _data.MoveSpeedAcceleration;
-        //     moveData.MoveSpeedFriction = _data.MoveSpeedFriction;
-        //     moveVelocity.Initialize_MoveSpeedData(moveData);
-        // }
     }
 
     public override void Enter() {}

@@ -113,7 +113,7 @@ public partial class PlayerStateManager : BaseStateManager
         {
             if (_enterConditions[States.BNormal_BodyState].Invoke() == true) // Check BNormal sub state 0.
             {
-                _stateNodesDict[States.BNormal_BodyState].SetResource(bNormalData[0]);
+                _stateNodesDict[States.BNormal_BodyState].SetData(bNormalData[0]);
                 SetCurrentState(States.BNormal_BodyState);
                 return;
             }
