@@ -32,16 +32,24 @@ partial class BNormal_BodyState : BaseState
 
     public override void SetResource<BNormal_Data>(BNormal_Data resource)
     {
-        if(resource is BNormal_Data)
-        {
-            _data = resource; // FIXME Can't convert BNormal_Data to BNormal_Data. HELP !!!
-            var moveData = new BodyStateData.MoveData();
+        _data = resource; // FIXME Can't convert BNormal_Data to BNormal_Data. HELP !!!
+        var moveData = new BodyStateData.MoveData();
 
-            moveData.MoveSpeedBase = _data.MoveSpeedBase;
-            moveData.MoveSpeedAcceleration = _data.MoveSpeedAcceleration;
-            moveData.MoveSpeedFriction = _data.MoveSpeedFriction;
-            moveVelocity.Initialize_MoveSpeedData(moveData);
-        }
+        moveData.MoveSpeedBase = _data.MoveSpeedBase;
+        moveData.MoveSpeedAcceleration = _data.MoveSpeedAcceleration;
+        moveData.MoveSpeedFriction = _data.MoveSpeedFriction;
+        moveVelocity.Initialize_MoveSpeedData(moveData);
+
+        // if(resource is BNormal_Data)
+        // {
+        //     _data = resource; // FIXME Can't convert BNormal_Data to BNormal_Data. HELP !!!
+        //     var moveData = new BodyStateData.MoveData();
+
+        //     moveData.MoveSpeedBase = _data.MoveSpeedBase;
+        //     moveData.MoveSpeedAcceleration = _data.MoveSpeedAcceleration;
+        //     moveData.MoveSpeedFriction = _data.MoveSpeedFriction;
+        //     moveVelocity.Initialize_MoveSpeedData(moveData);
+        // }
     }
 
     public override void Enter() {}
