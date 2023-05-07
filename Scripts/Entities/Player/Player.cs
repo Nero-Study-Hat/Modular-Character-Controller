@@ -1,15 +1,9 @@
 using Godot;
-using System;
 
 public partial class Player : CharacterBody2D
 {
-
 	[Export]
-	private BodyStateMachine moveStatesManager = new BodyStateMachine();
-
-    [ExportGroup("Resource Files")]
-    [Export]
-    private BaseMoveData bNormalData;
+	private StateMachine _stateMachine = new StateMachine();
 
 // in the future maybe setup a log for who is accessing this if needed
 	public Player GetPlayerRef()
@@ -19,17 +13,16 @@ public partial class Player : CharacterBody2D
 
     public override void _Ready()
     {
-        BaseMoveData[] statesResources = new BaseMoveData[] {bNormalData};
-        moveStatesManager.Init(statesResources);
+        _stateMachine.Init();
     }
 
 	public override void _Process(double delta)
     {
-        moveStatesManager.Process();
+        _stateMachine.Process();
     }
 	
     public override void _PhysicsProcess(double delta)
     {
-        moveStatesManager.PhysicsProcess();
+        _stateMachine.PhysicsProcess();
     }
 }

@@ -4,19 +4,15 @@ using Godot;
 
 public partial class VelocityComponent : Node, IMoveVelocity
 {
-    private float moveSpeedBase = 1f;
-    private float moveSpeedAcc = 1f;
-    private float MoveSpeedFric = 1f;
+    private BodyStateData.MoveData _moveData;
 
     private Vector2 velocity;
     private Vector2 direction;
 
 
-    public void Initialize_MoveSpeedData(float MoveSpeedBase, float MoveSpeedAcceleration, float MoveSpeedFriction)
+    public void Initialize_MoveSpeedData(BodyStateData.MoveData moveData)
     {
-        moveSpeedBase = MoveSpeedBase;
-        moveSpeedAcc = MoveSpeedAcceleration;
-        MoveSpeedFric = MoveSpeedFriction;
+        _moveData = moveData;
     }
 
     public void SetDirection(float position_x, float position_y)
@@ -37,12 +33,12 @@ public partial class VelocityComponent : Node, IMoveVelocity
 
     public void AccelerateTo()
     {
-        velocity = velocity.MoveToward(direction * moveSpeedBase, moveSpeedAcc);
+        velocity = velocity.MoveToward(direction * _moveData.MoveSpeedBase, _moveData.MoveSpeedAcceleration);
     }
 
     public void Friction() // this is giving me my movement bug
     {
-        velocity = velocity.MoveToward(Vector2.Zero, MoveSpeedFric);
+        velocity = velocity.MoveToward(Vector2.Zero, _moveData.MoveSpeedFriction);
     }
 
 

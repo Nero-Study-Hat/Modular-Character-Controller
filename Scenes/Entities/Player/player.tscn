@@ -1,27 +1,39 @@
-[gd_scene load_steps=8 format=3 uid="uid://2buyqgccy3kw"]
+[gd_scene load_steps=8 format=3 uid="uid://drwdamgyhvwj5"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/Player/Player.cs" id="1_uhu85"]
-[ext_resource type="Resource" uid="uid://bn6blwoymkxei" path="res://Data/Entity/Player/MoveStates_Data/BNormal/generic_v1.tres" id="2_vh1nb"]
-[ext_resource type="PackedScene" path="res://Components/StateMachine/Body/BodyStateMachine.tscn" id="2_xmewg"]
+[ext_resource type="PackedScene" uid="uid://dy0th3tht5pso" path="res://Scenes/Components/StateMachine/StateMachine.tscn" id="2_xmewg"]
 [ext_resource type="PackedScene" uid="uid://c8gvkvxuj2bq4" path="res://Scenes/Entities/Player/CustomStates/Body/BIdle_BodyState.tscn" id="3_qox5b"]
 [ext_resource type="PackedScene" uid="uid://h18a1s5d4ygf" path="res://Scenes/Entities/Player/CustomStates/Body/BNormal_BodyState.tscn" id="4_vemu6"]
-[ext_resource type="Script" path="res://Scripts/Entities/Player/Player_BodyManager.cs" id="5_ltbuk"]
+[ext_resource type="Script" path="res://Scripts/Entities/Player/Managers/PlayerStateManager.cs" id="5_74rlw"]
+[ext_resource type="Resource" uid="uid://dvtt1mthhbabt" path="res://Data/Entity/Player/CustomStates/Body/BNormal/walk_v1.tres" id="6_fqya4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oysjy"]
 size = Vector2(40, 40)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("moveStatesManager")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_stateMachine")]
 script = ExtResource("1_uhu85")
-moveStatesManager = NodePath("Movement_StateMachine")
-bNormalData = ExtResource("2_vh1nb")
+_stateMachine = NodePath("StateMachine")
 metadata/_edit_group_ = true
 
-[node name="Resource Preloaders Body States" type="Node" parent="."]
+[node name="StateMachine" parent="." node_paths=PackedStringArray("_startState", "_stateManager") instance=ExtResource("2_xmewg")]
+_startState = NodePath("BNormal_BodyState")
+_startData = ExtResource("6_fqya4")
+_stateManager = NodePath("../PlayerStateManager")
 
-[node name="CustomBodyStates" type="ResourcePreloader" parent="Resource Preloaders Body States"]
+[node name="BNormal_BodyState" parent="StateMachine" instance=ExtResource("4_vemu6")]
+
+[node name="StatesResourcePreloaders" type="Node" parent="."]
+
+[node name="CustomBodyStates" type="ResourcePreloader" parent="StatesResourcePreloaders"]
 resources = [PackedStringArray("BIdle_BodyState", "BNormal_BodyState"), [ExtResource("3_qox5b"), ExtResource("4_vemu6")]]
 
-[node name="GeneralBodyStates" type="ResourcePreloader" parent="Resource Preloaders Body States"]
+[node name="GeneralBodyStates" type="ResourcePreloader" parent="StatesResourcePreloaders"]
+
+[node name="PlayerStateManager" type="Node" parent="." node_paths=PackedStringArray("_customResPreloader", "_generalResPreloader")]
+script = ExtResource("5_74rlw")
+_customResPreloader = NodePath("../StatesResourcePreloaders/CustomBodyStates")
+_generalResPreloader = NodePath("../StatesResourcePreloaders/GeneralBodyStates")
+bNormalData = Array[Resource]([ExtResource("6_fqya4")])
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 40.0
@@ -30,14 +42,3 @@ offset_bottom = 40.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(20, 20)
 shape = SubResource("RectangleShape2D_oysjy")
-
-[node name="Movement_StateMachine" parent="." node_paths=PackedStringArray("startState", "conditionsCheck") instance=ExtResource("2_xmewg")]
-startState = NodePath("BNormal_BodyState")
-conditionsCheck = NodePath("../PlayerBodyManager")
-
-[node name="BNormal_BodyState" parent="Movement_StateMachine" instance=ExtResource("4_vemu6")]
-
-[node name="PlayerBodyManager" type="Node" parent="." node_paths=PackedStringArray("customResPreloader", "generalResPreloader")]
-script = ExtResource("5_ltbuk")
-customResPreloader = NodePath("../Resource Preloaders Body States/CustomBodyStates")
-generalResPreloader = NodePath("../Resource Preloaders Body States/GeneralBodyStates")
