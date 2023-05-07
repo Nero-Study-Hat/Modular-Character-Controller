@@ -16,34 +16,34 @@ public partial class Player_BodyManager : BaseBodyStateManager
     [Export]
     private BaseBodyData[] bNormalData;
 
-    public enum states // names must be same as class names
+    public enum States // names must be same as class names
     {
         BIdle_BodyState,
-        BNormal_BodyState
+        BNormal_BodyState,
     }
-    public states _currentState = states.BNormal_BodyState; // Must be start state.
+    public States _currentState = States.BNormal_BodyState; // Must be start state.
     
-    Dictionary<states, BaseBodyState> _stateNodesDict = new Dictionary<states, BaseBodyState>();
+    Dictionary<States, BaseBodyState> _stateNodesDict = new Dictionary<States, BaseBodyState>();
 
-    Dictionary<states, Func<bool>> _enterConditions = new Dictionary<states, Func<bool>>();
-    Dictionary<states, Func<bool>> _spawnConditions = new Dictionary<states, Func<bool>>();
+    Dictionary<States, Func<bool>> _enterConditions = new Dictionary<States, Func<bool>>();
+    Dictionary<States, Func<bool>> _spawnConditions = new Dictionary<States, Func<bool>>();
 
     private void SetConditionChecks()
     {
-        _enterConditions.Add(states.BIdle_BodyState, () => Input.IsActionJustPressed("switchIdle"));
-        _enterConditions.Add(states.BNormal_BodyState, () => Input.IsActionJustPressed("switchNormal"));
+        _enterConditions.Add(States.BIdle_BodyState, () => Input.IsActionJustPressed("switchIdle"));
+        _enterConditions.Add(States.BNormal_BodyState, () => Input.IsActionJustPressed("switchNormal"));
 
-        _spawnConditions.Add(states.BIdle_BodyState, () => Input.IsActionJustPressed("spawnIdle"));
-        _spawnConditions.Add(states.BNormal_BodyState, () => Input.IsActionJustPressed("spawnNormal"));
+        _spawnConditions.Add(States.BIdle_BodyState, () => Input.IsActionJustPressed("spawnIdle"));
+        _spawnConditions.Add(States.BNormal_BodyState, () => Input.IsActionJustPressed("spawnNormal"));
     }
 
-    private void SetCurrentState(states state)
+    private void SetCurrentState(States state)
     {
         _currentState = state;
         _bodyStateMachine.ChangeState(_stateNodesDict[state]);
     }
 
-    private void SpawnState(states state, ResourcePreloader resourcePreloader)
+    private void SpawnState(States state, ResourcePreloader resourcePreloader)
     {
         var stateName = state.ToString();
         var stateScene = resourcePreloader.GetResource(stateName) as PackedScene; // this line is breaking
@@ -72,7 +72,7 @@ public partial class Player_BodyManager : BaseBodyStateManager
         {
             var stateNode = _bodyStateMachine.GetChild<BaseBodyState>(state);
             var stateName = stateNode.GetType().ToString();
-            states stateEnumVal = (states)Enum.Parse(typeof(states), stateName);
+            States stateEnumVal = (States)Enum.Parse(typeof(States), stateName);
             _stateNodesDict.Add(stateEnumVal, stateNode);
         }
     }
@@ -82,10 +82,10 @@ public partial class Player_BodyManager : BaseBodyStateManager
     {
         switch (_currentState)
         {
-            case states.BIdle_BodyState:
+            case States.BIdle_BodyState:
                 BIdle_CheckConditions();
                 break;
-            case states.BNormal_BodyState:
+            case States.BNormal_BodyState:
                 BNormal_CheckConditions();
                 break;
         }
@@ -103,16 +103,16 @@ public partial class Player_BodyManager : BaseBodyStateManager
         BNormal_CheckSpawn();
     }
 
-// --
+// -- BIdle Checking
 
     private void BIdle_CheckSwitch()
     {
-        if (_stateNodesDict.ContainsKey(states.BNormal_BodyState) == true) // Check BNormal Switch
+        if (_stateNodesDict.ContainsKey(States.BNormal_BodyState) == true) // Check BNormal Switch
         {
-            if (_enterConditions[states.BNormal_BodyState].Invoke() == true) // Check BNormal sub state 0.
+            if (_enterConditions[States.BNormal_BodyState].Invoke() == true) // Check BNormal sub state 0.
             {
-                _stateNodesDict[states.BNormal_BodyState].SetResource(bNormalData[0]);
-                SetCurrentState(states.BNormal_BodyState);
+                _stateNodesDict[States.BNormal_BodyState].SetResource(bNormalData[0]);
+                SetCurrentState(States.BNormal_BodyState);
                 return;
             }
         }
@@ -120,25 +120,25 @@ public partial class Player_BodyManager : BaseBodyStateManager
 
     private void BIdle_CheckSpawn()
     {
-        if (_stateNodesDict.ContainsKey(states.BNormal_BodyState) == false) // Check BNormal Spawn (Currently empty)
+        if (_stateNodesDict.ContainsKey(States.BNormal_BodyState) == false) // Check BNormal Spawn (Currently empty)
         {
-            if (_spawnConditions[states.BNormal_BodyState].Invoke() == true)
+            if (_spawnConditions[States.BNormal_BodyState].Invoke() == true)
             {
-                SpawnState(states.BIdle_BodyState, _customResPreloader);
+                SpawnState(States.BIdle_BodyState, _customResPreloader);
                 return;
             }
         }
     }
 
-// --
+// -- BNormal Checking
 
     private void BNormal_CheckSwitch()
     {
-        if (_stateNodesDict.ContainsKey(states.BIdle_BodyState) == true) // Check BIdle Switch
+        if (_stateNodesDict.ContainsKey(States.BIdle_BodyState) == true) // Check BIdle Switch
         {
-            if (_enterConditions[states.BIdle_BodyState].Invoke() == true)
+            if (_enterConditions[States.BIdle_BodyState].Invoke() == true)
             {
-                SetCurrentState(states.BIdle_BodyState);
+                SetCurrentState(States.BIdle_BodyState);
                 return;
             }
         }
@@ -146,11 +146,11 @@ public partial class Player_BodyManager : BaseBodyStateManager
 
     private void BNormal_CheckSpawn()
     {
-        if (_stateNodesDict.ContainsKey(states.BIdle_BodyState) == false) // Check BIdle Spawn
+        if (_stateNodesDict.ContainsKey(States.BIdle_BodyState) == false) // Check BIdle Spawn
         {
-            if (_spawnConditions[states.BIdle_BodyState].Invoke() == true)
+            if (_spawnConditions[States.BIdle_BodyState].Invoke() == true)
             {
-                SpawnState(states.BIdle_BodyState, _customResPreloader);
+                SpawnState(States.BIdle_BodyState, _customResPreloader);
                 return;
             }
         }

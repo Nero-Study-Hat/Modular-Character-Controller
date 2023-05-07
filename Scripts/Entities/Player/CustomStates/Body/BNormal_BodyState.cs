@@ -14,9 +14,18 @@ partial class BNormal_BodyState : BaseBodyState
     // Connect up component nodes.
     public override void _Ready()
     {
-        // TODO write check for child nodes
-        moveVelocity = this.GetChildren().First(node => node is IMoveVelocity) as IMoveVelocity;
-        getDirection = this.GetChildren().First(node => node is IGetDirection) as IGetDirection;
+        var velocityNodeDependency = this.GetChildren().Where(node => node is IMoveVelocity).ToList();
+        var directionNodeDependency = this.GetChildren().Where(node => node is IGetDirection).ToList();
+        if (velocityNodeDependency.Count != 1)
+        {
+            GD.PrintErr($"Incorrect amount of {moveVelocity.GetType} nodes in: {this}");
+        }
+        if (directionNodeDependency.Count != 1)
+        {
+            GD.PrintErr($"Incorrect amount of {getDirection.GetType} nodes in: {this}");
+        }
+        moveVelocity = (IMoveVelocity)velocityNodeDependency[0];
+        getDirection = (IGetDirection)directionNodeDependency[0];
     }
 
     public override void SetResource(BaseBodyData stateData)
