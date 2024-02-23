@@ -44,6 +44,8 @@ public partial class PlayerStateManager : BaseStateManager
     private void SetCurrentState(States state)
     {
         _currentState = state;
+        //TODO: Move ChangeState method functionality from StateMachine to here
+        // it is used a bunch here but never in the state machine class where it lives
         _stateMachine.ChangeState(_stateNodesDict[state]);
     }
 

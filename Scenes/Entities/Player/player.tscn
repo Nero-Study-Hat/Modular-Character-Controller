@@ -15,10 +15,8 @@ script = ExtResource("1_uhu85")
 _stateMachine = NodePath("StateMachine")
 metadata/_edit_group_ = true
 
-[node name="StateMachine" parent="." node_paths=PackedStringArray("_startState", "_stateManager") instance=ExtResource("2_xmewg")]
-_startState = NodePath("BNormal_BodyState")
+[node name="StateMachine" parent="." instance=ExtResource("2_xmewg")]
 _startData = ExtResource("6_fqya4")
-_stateManager = NodePath("../PlayerStateManager")
 
 [node name="BNormal_BodyState" parent="StateMachine" instance=ExtResource("4_vemu6")]
 
