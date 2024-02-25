@@ -14,7 +14,7 @@ partial class BNormal_BodyState : BaseState
     // Connect up component nodes.
     public override void _Ready()
     {
-        _entity = this.GetOwner<CharacterBody2D>();
+        _entity = this.GetParent<StateMachine>().GetParent<CharacterBody2D>();
         var velocityNodeDependency = this.GetChildren().Where(node => node is IMoveVelocity).ToList();
         var directionNodeDependency = this.GetChildren().Where(node => node is IGetDirection).ToList();
         if (velocityNodeDependency.Count != 1)

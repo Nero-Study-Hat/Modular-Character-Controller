@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dy0th3tht5pso" path="res://Scenes/Components/StateMachine/StateMachine.tscn" id="2_xmewg"]
 [ext_resource type="PackedScene" uid="uid://c8gvkvxuj2bq4" path="res://Scenes/Entities/Player/CustomStates/Body/BIdle_BodyState.tscn" id="3_qox5b"]
 [ext_resource type="PackedScene" uid="uid://h18a1s5d4ygf" path="res://Scenes/Entities/Player/CustomStates/Body/BNormal_BodyState.tscn" id="4_vemu6"]
-[ext_resource type="Script" path="res://Scripts/Entities/Player/Managers/PlayerStateManager.cs" id="5_74rlw"]
+[ext_resource type="Script" path="res://Scripts/Entities/Player/State/PlayerStateManager.cs" id="5_hxx47"]
 [ext_resource type="Resource" uid="uid://dvtt1mthhbabt" path="res://Data/Entity/Player/CustomStates/Body/BNormal/walk_v1.tres" id="6_fqya4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oysjy"]
@@ -15,12 +15,11 @@ script = ExtResource("1_uhu85")
 _stateMachine = NodePath("StateMachine")
 metadata/_edit_group_ = true
 
-[node name="StateMachine" parent="." instance=ExtResource("2_xmewg")]
-_startData = ExtResource("6_fqya4")
+[node name="StateMachine" parent="." node_paths=PackedStringArray("_startState", "_stateManager") instance=ExtResource("2_xmewg")]
+_startState = NodePath("BIdle_BodyState")
+_stateManager = NodePath("../PlayerStateManager")
 
-[node name="BNormal_BodyState" parent="StateMachine" instance=ExtResource("4_vemu6")]
-
-[node name="BNormal_BodyState2" parent="StateMachine" instance=ExtResource("4_vemu6")]
+[node name="BIdle_BodyState" parent="StateMachine" instance=ExtResource("3_qox5b")]
 
 [node name="StatesResourcePreloaders" type="Node" parent="."]
 
@@ -30,7 +29,7 @@ resources = [PackedStringArray("BIdle_BodyState", "BNormal_BodyState"), [ExtReso
 [node name="GeneralBodyStates" type="ResourcePreloader" parent="StatesResourcePreloaders"]
 
 [node name="PlayerStateManager" type="Node" parent="." node_paths=PackedStringArray("_customResPreloader", "_generalResPreloader")]
-script = ExtResource("5_74rlw")
+script = ExtResource("5_hxx47")
 _customResPreloader = NodePath("../StatesResourcePreloaders/CustomBodyStates")
 _generalResPreloader = NodePath("../StatesResourcePreloaders/GeneralBodyStates")
 bNormalData = Array[Resource]([ExtResource("6_fqya4")])
